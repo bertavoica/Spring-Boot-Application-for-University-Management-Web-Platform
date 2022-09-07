@@ -1,0 +1,6 @@
+!1 Test University Web Platform
+!contents -R2 -g -p -f -h
+
+!define TEST_SYSTEM {slim}
+!path target/dependencies/*.jar
+
