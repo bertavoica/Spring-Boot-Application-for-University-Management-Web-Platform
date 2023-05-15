@@ -1,8 +1,6 @@
 
 m
 =src/main/java/com/cti/payload/request/AdminUpdateRequest.java,e\a\eaad50fcd7d2db3c2f44a2f031176a46e5577a37
-d
-4src/main/java/com/cti/repository/UserRepository.java,c\9\c99254fdd96eb557ffa1337d9c778bfff448b8d4
 h
 8src/main/java/com/cti/controllers/StudentController.java,c\0\c0916e5458c16a675437ef92ba831d816070e0f8
 l
@@ -11,15 +9,9 @@ g
 7src/main/java/com/cti/repository/TeacherRepository.java,b\2\b2519a62af30c20d16ada3dc9142bd3c1ef2d945
 e
 5src/main/java/com/cti/controllers/DemoController.java,c\d\cd4c68d56b54da4dc876d068c73c5873f16ffccc
-¤
-tFitNesseRoot/files/testResults/FrontPage.UniversityRestApiSuite.ControllerAdmintest.Tests/20230204142522_1_0_0_0.xml,b\9\b9309197c14859b47f218b6dd731bd5de94bf171
 Y
 )src/main/java/com/cti/models/Project.java,c\5\c572fba673208b104126df2d27c6fae781645b84
 e
 5src/main/java/com/cti/security/WebSecurityConfig.java,7\7\77163b2563df700b42798798ba0be5edef4c56d2
-Q
-!src/test/java/com/cti/TestNG.java,c\b\cb0bbb446b63b107745a220c76b822db6b1542f3
-R
-"src/test/java/com/cti/TestNG2.java,1\7\17e95f5d743b482944511c04dec8afc3513ac9c5
 n
 >src/main/java/com/cti/repository/SpecializationRepository.java,9\6\963172f8fa64f332ea9e63173c86557df9b5dc9b
