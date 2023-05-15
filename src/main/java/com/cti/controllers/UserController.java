@@ -7,7 +7,7 @@ import com.cti.models.User;
 import com.cti.repository.StudentRepository;
 import com.cti.repository.UserRepository;
 import com.cti.service.UserService;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

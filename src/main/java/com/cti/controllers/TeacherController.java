@@ -5,7 +5,7 @@ import com.cti.payload.request.TeacherAddRequest;
 import com.cti.payload.request.TeacherUpdateRequest;
 import com.cti.repository.*;
 import com.cti.service.UserService;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

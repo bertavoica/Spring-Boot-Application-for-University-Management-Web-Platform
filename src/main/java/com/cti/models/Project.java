@@ -1,7 +1,7 @@
 package com.cti.models;
 
 import com.cti.payload.request.ProjectAddRequest;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

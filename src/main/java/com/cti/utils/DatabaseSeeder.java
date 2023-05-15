@@ -1,4 +1,4 @@
-package com.cti.service;
+package com.cti.utils;
 
 import com.cti.models.ERole;
 import com.cti.models.Role;
@@ -6,6 +6,8 @@ import com.cti.models.User;
 import com.cti.repository.RoleRepository;
 import com.cti.repository.StudentRepository;
 import com.cti.repository.UserRepository;
+import com.cti.service.EmailService;
+import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

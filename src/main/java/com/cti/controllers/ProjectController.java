@@ -13,7 +13,7 @@ import com.cti.repository.ProjectRepository;
 import com.cti.repository.StudentRepository;
 import com.cti.service.EmailService;
 import com.cti.service.UserService;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

@@ -6,7 +6,7 @@ import com.cti.payload.request.TitleAddRequest;
 import com.cti.repository.TeacherRepository;
 import com.cti.repository.TitleRepository;
 import com.cti.service.UserService;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

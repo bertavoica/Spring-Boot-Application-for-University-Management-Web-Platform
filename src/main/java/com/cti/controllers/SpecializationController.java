@@ -10,7 +10,7 @@ import com.cti.repository.SpecializationRepository;
 import com.cti.repository.TeacherRepository;
 import com.cti.service.SpecializationService;
 import com.cti.service.UserService;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

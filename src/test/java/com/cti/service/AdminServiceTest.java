@@ -6,6 +6,7 @@ import com.cti.repository.RoleRepository;
 import com.cti.repository.StudentRepository;
 import com.cti.repository.TeacherRepository;
 import com.cti.repository.UserRepository;
+import com.cti.utils.Utils;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

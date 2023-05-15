@@ -1,4 +1,4 @@
-package com.cti.service;
+package com.cti.utils;
 
 import com.cti.models.EEducationCycle;
 import com.cti.models.ELanguage;

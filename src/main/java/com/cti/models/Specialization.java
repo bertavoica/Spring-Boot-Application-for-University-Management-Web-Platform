@@ -1,7 +1,7 @@
 package com.cti.models;
 
 import com.cti.payload.request.SpecializationAddRequest;
-import com.cti.service.Utils;
+import com.cti.utils.Utils;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.GeneratedValue;
