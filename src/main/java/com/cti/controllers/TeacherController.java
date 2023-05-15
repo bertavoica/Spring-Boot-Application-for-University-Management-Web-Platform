@@ -79,6 +79,8 @@ public class TeacherController {
         Teacher teacher;
         User user;
 
+        System.out.println("111");
+
         if (userRepository.findByUsername(teacherAddRequest.getUsername()).isPresent())
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UserExist").get(userService.getPreferredLanguage(principal)));
 
@@ -95,6 +97,8 @@ public class TeacherController {
 
         teacher = new Teacher(teacherAddRequest);
         teacherRepository.save(teacher);
+
+        System.out.println("1");
 
         return ResponseEntity.ok(teacherRepository.findAll());
     }

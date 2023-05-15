@@ -1,0 +1,101 @@
+<test page>
+
+|Import                         |
+|smartrics.rest.fitnesse.fixture|
+
+|Table: Rest Fixture Config          |
+|http.client.connection.timeout|10000|
+
+
+!1 Testing the get all courses
+
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|GET                |/course-controller|200|||[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1},{"uniqueId":"d3cb554d-0e1d-437a-aad3-26b28f3c4305","completeName":"Course_2","abbreviation":"C2","description":"This is course_2","responsible":["teacher"],"assignedUsers":0}]|
+
+!1 Testing the get user courses
+
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|GET                |/course-controller/user?username=student_1|200|||[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1}]|
+
+!1 Testing the get enrolled students
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|GET                |/course-controller/enrolled?uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|200|||["student_1"]|
+
+!1 Testing the add user courses when student is already enrolled
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/user?username=student_1&uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|400|||Student is already enrolled in this course student_1|
+
+!1 Testing the add user courses when student does not exist
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/user?username=student&uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|400|||Student with the following username does not exist: student|
+
+!1 Testing the add user courses successfully
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/user?username=student_5&uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|200|||Successfully enrolled student in this course student_5|
+
+!1 Testing the remove user courses successfully
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|DELETE             |/course-controller/user?username=student_1&uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|200|||
+
+!1 Testing the get responsible successfully
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|GET                |/course-controller/responsible?uniqueId=a6b156b0-1c8b-4b2c-9f25-b708afb99d5f|200|||["teacher"]|
+
+!1 Testing the add responsible successfully
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/responsible?username=teacher_2&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|200|||Successfully added teacher as responsible for course course_3|
+
+!1 Testing the add responsible when user doesn't exist
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/responsible?username=teacher_11&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|400|||Username does not exist teacher_11|
+
+!1 Testing the add responsible when course doesn't exist
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/responsible?username=teacher_11&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cd|400|||Course not found|
+
+!1 Testing the add responsible when user is a student
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/responsible?username=student_1&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|400|||Username is a student student_1|
+
+
+!1 Testing the add responsible when user is a already responsible
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|PUT                |/course-controller/responsible?username=teacher_2&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|400|||Username is a student student_1|
+
+!1 Testing the remove responsible successfully
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|DELETE             |/course-controller/responsible?username=teacher_2&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|200|||Successfully removed teacher as responsible from course_3|
+
+!1 Testing the remove responsible when user is not responsible for course
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|DELETE             |/course-controller/responsible?username=teacher_1&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71cdbc29|400|||Course does not have teacher as responsible teacher_1|
+
+!1 Testing the remove responsible when course not found
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw|
+|DELETE             |/course-controller/responsible?username=teacher_1&uniqueId=acbfd7d7-8e26-4d5c-b382-010f71c|400|||Course not found|
+
+
+
+
+
+
+
+
+
+

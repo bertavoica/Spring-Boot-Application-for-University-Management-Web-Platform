@@ -1,0 +1,16 @@
+<test page>
+
+|Import                         |
+|smartrics.rest.fitnesse.fixture|
+
+|Table: Rest Fixture Config          |
+|http.client.connection.timeout|10000|
+
+!1 Testing the get enrolled students
+|Table: Rest Fixture|http://localhost:8080/                           																				 |														 
+|setHeaders 		|!-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MzY0MjIyOCwiZXhwIjoxNjgzNzI4NjI4fQ.4uuQmMJgZuYp10fuHiYoMdKz8qYwaSKEEw0jxEvHF8ugqL4ov4aCfu6LU95rAET7kEZziRkQu0Vu1tk13GJYPw
+Content-Type: application/json|
+Accept: application/json|
+|POST               |/teacher-controller|200|||[]|
+|setBody            |{"username": "Teacher2", "emailAddress": "teacher_2@gmail.com", "title": "Title_2", "password": "test1234"}|
+

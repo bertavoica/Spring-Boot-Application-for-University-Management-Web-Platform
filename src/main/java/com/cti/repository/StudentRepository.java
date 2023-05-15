@@ -10,6 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends MongoRepository<Student, String> {
+    @Query("{ 'coursesIds': ?0 }")
+    List<Student> findByCourseId(String uniqueId);
 
     Optional<Student> findByUsername(String username);
 
@@ -19,6 +21,4 @@ public interface StudentRepository extends MongoRepository<Student, String> {
 
     List<Student> findByUsernameContainingIgnoreCase(String username);
 
-    @Query("{ 'coursesIds': ?0 }")
-    List<Student> findByCourseId(String uniqueId);
 }

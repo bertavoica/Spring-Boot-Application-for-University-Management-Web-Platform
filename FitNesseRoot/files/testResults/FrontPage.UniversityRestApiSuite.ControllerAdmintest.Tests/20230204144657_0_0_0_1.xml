@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+<testResults>
+  <FitNesseVersion>v20220815</FitNesseVersion>
+  <rootPath>FrontPage.UniversityRestApiSuite.ControllerAdmintest.Tests</rootPath>
+  <result>
+    <counts>
+      <right>4</right>
+      <wrong>0</wrong>
+      <ignores>0</ignores>
+      <exceptions>4</exceptions>
+    </counts>
+    <date>2023-02-04T14:46:57+02:00</date>
+    <runTimeInMillis>283</runTimeInMillis>
+    <content>&lt;br/&gt;&amp;lt;test page&amp;gt;&lt;br/&gt;&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;Import&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor0"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;smartrics.rest.fitnesse.fixture&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td colspan="2"&gt;&lt;span class="pass"&gt;Table: Rest Fixture Config&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;http.client.connection.timeout&lt;/td&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;10000&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;h1 id="0"&gt;Testing the get all courses&lt;/h1&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;Table: Rest Fixture&lt;/span&gt;&lt;/td&gt;
+		&lt;td colspan="3"&gt;&lt;a href="http://localhost:8080/"&gt;http://localhost:8080/&lt;/a&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;setHeaders&lt;/td&gt;
+		&lt;td colspan="3"&gt;&lt;div&gt;!-Authorization:&amp;nbsp;Bearer&amp;nbsp;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw&lt;/div&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;GET &lt;span class="error"&gt;&lt;div&gt;Execution of Get caused exception 'You must specify a body cell'&lt;/div&gt;&lt;/span&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;div&gt;&lt;a href='http://localhost:8080/course-controller'&gt;/course-controller&lt;/a&gt;&lt;/div&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;&lt;div&gt;200&lt;/div&gt;&lt;/span&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;div&gt;X-Content-Type-Options&amp;nbsp;:&amp;nbsp;nosniff&lt;br/&gt;X-XSS-Protection&amp;nbsp;:&amp;nbsp;1;&amp;nbsp;mode=block&lt;br/&gt;Cache-Control&amp;nbsp;:&amp;nbsp;no-cache,&amp;nbsp;no-store,&amp;nbsp;max-age=0,&amp;nbsp;must-revalidate&lt;br/&gt;Pragma&amp;nbsp;:&amp;nbsp;no-cache&lt;br/&gt;Expires&amp;nbsp;:&amp;nbsp;0&lt;br/&gt;X-Frame-Options&amp;nbsp;:&amp;nbsp;DENY&lt;br/&gt;Content-Type&amp;nbsp;:&amp;nbsp;application/json;charset=UTF-8&lt;br/&gt;Transfer-Encoding&amp;nbsp;:&amp;nbsp;chunked&lt;br/&gt;Date&amp;nbsp;:&amp;nbsp;Sat,&amp;nbsp;04&amp;nbsp;Feb&amp;nbsp;2023&amp;nbsp;12:46:58&amp;nbsp;GMT&lt;/div&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;br/&gt;&lt;h2 id="1"&gt;Testing the get user courses&lt;/h2&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;Table: Rest Fixture&lt;/span&gt;&lt;/td&gt;
+		&lt;td colspan="4"&gt;&lt;a href="http://localhost:8080/"&gt;http://localhost:8080/&lt;/a&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowTitle"&gt;
+		&lt;td&gt;setHeaders&lt;/td&gt;
+		&lt;td colspan="4"&gt;&lt;div&gt;!-Authorization:&amp;nbsp;Bearer&amp;nbsp;eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw&lt;/div&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr class="slimRowColor1"&gt;
+		&lt;td&gt;GET&lt;/td&gt;
+		&lt;td&gt;&lt;div&gt;&lt;a href='http://localhost:8080/course-controller/user?username=student_1'&gt;/course-controller/user?username=student_1&lt;/a&gt;&lt;/div&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;span class="pass"&gt;&lt;div&gt;200&lt;/div&gt;&lt;/span&gt;&lt;/td&gt;
+		&lt;td&gt;&lt;div&gt;X-Content-Type-Options&amp;nbsp;:&amp;nbsp;nosniff&lt;br/&gt;X-XSS-Protection&amp;nbsp;:&amp;nbsp;1;&amp;nbsp;mode=block&lt;br/&gt;Cache-Control&amp;nbsp;:&amp;nbsp;no-cache,&amp;nbsp;no-store,&amp;nbsp;max-age=0,&amp;nbsp;must-revalidate&lt;br/&gt;Pragma&amp;nbsp;:&amp;nbsp;no-cache&lt;br/&gt;Expires&amp;nbsp;:&amp;nbsp;0&lt;br/&gt;X-Frame-Options&amp;nbsp;:&amp;nbsp;DENY&lt;br/&gt;Content-Type&amp;nbsp;:&amp;nbsp;application/json;charset=UTF-8&lt;br/&gt;Transfer-Encoding&amp;nbsp;:&amp;nbsp;chunked&lt;br/&gt;Date&amp;nbsp;:&amp;nbsp;Sat,&amp;nbsp;04&amp;nbsp;Feb&amp;nbsp;2023&amp;nbsp;12:46:58&amp;nbsp;GMT&lt;/div&gt;&lt;/td&gt;
+		&lt;td&gt;student_1 &lt;span class="error"&gt;&lt;div&gt;student_1&lt;br/&gt;&lt;hr/&gt;&lt;br/&gt;&lt;code&gt;java.lang.IllegalArgumentException:&amp;nbsp;Cannot&amp;nbsp;evaluate&amp;nbsp;'student_1'&amp;nbsp;in&amp;nbsp;[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This&amp;nbsp;is&amp;nbsp;course_1","responsible":["teacher"],"assignedUsers":1}]&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.support.XPathBodyTypeAdapter.equals(XPathBodyTypeAdapter.java:77)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.support.JSONBodyTypeAdapter.equals(JSONBodyTypeAdapter.java:82)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.process(RestFixture.java:1221)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.completeHttpMethodExecution(RestFixture.java:1182)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.doMethod(RestFixture.java:1094)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.doMethod(RestFixture.java:1081)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.GET(RestFixture.java:760)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native&amp;nbsp;Method)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/java.lang.reflect.Method.invoke(Method.java:568)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.processRow(RestFixture.java:1021)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.processSlimRow(RestFixture.java:1367)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.RestFixture.doTable(RestFixture.java:432)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native&amp;nbsp;Method)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;java.base/java.lang.reflect.Method.invoke(Method.java:568)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.fixtureInteraction.SimpleInteraction.methodInvoke(SimpleInteraction.java:322)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.fixtureInteraction.SimpleInteraction.callMethod(SimpleInteraction.java:307)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.fixtureInteraction.SimpleInteraction.invokeMethod(SimpleInteraction.java:290)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.fixtureInteraction.SimpleInteraction.findAndInvoke(SimpleInteraction.java:217)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.MethodExecutor.findAndInvoke(MethodExecutor.java:18)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.FixtureMethodExecutor.execute(FixtureMethodExecutor.java:18)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.StatementExecutor.getMethodExecutionResult(StatementExecutor.java:139)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.StatementExecutor.call(StatementExecutor.java:112)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.instructions.CallAndOptionalAssignInstruction.executeInternal(CallAndOptionalAssignInstruction.java:30)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.instructions.Instruction.execute(Instruction.java:29)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.ListExecutor$Executive.executeStatement(ListExecutor.java:49)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.ListExecutor$Executive.executeStatements(ListExecutor.java:43)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.ListExecutor.execute(ListExecutor.java:85)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimServer.executeInstructions(SlimServer.java:82)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimServer.processOneSetOfInstructions(SlimServer.java:75)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimServer.tryProcessInstructions(SlimServer.java:62)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimServer.serve(SlimServer.java:47)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimService.handle(SlimService.java:169)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimService.acceptOne(SlimService.java:177)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimService.accept(SlimService.java:139)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimService.startWithFactory(SlimService.java:92)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;fitnesse.slim.SlimService.main(SlimService.java:57)&lt;br/&gt;Caused&amp;nbsp;by:&amp;nbsp;java.lang.IllegalArgumentException:&amp;nbsp;XPath&amp;nbsp;expectations&amp;nbsp;in&amp;nbsp;JSON&amp;nbsp;content&amp;nbsp;are&amp;nbsp;not&amp;nbsp;supported&amp;nbsp;anymore.&amp;nbsp;Please&amp;nbsp;use&amp;nbsp;JavaScript&amp;nbsp;expressions.&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.support.JSONBodyTypeAdapter.eval(JSONBodyTypeAdapter.java:54)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;at&amp;nbsp;smartrics.rest.fitnesse.fixture.support.XPathBodyTypeAdapter.equals(XPathBodyTypeAdapter.java:71)&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;...&amp;nbsp;39&amp;nbsp;more&lt;br/&gt;&lt;/code&gt;&lt;/div&gt;&lt;/span&gt;&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;br/&gt;</content>
+    <relativePageName>Tests</relativePageName>
+    <instructions>
+      <instructionResult>
+        <instruction>{id='import_0_0', instruction='import', path='smartrics.rest.fitnesse.fixture'}</instruction>
+        <slimResult>pass(smartrics.rest.fitnesse.fixture)</slimResult>
+        <expectation>
+          <status>pass</status>
+          <instructionId>import_0_0</instructionId>
+          <col>0</col>
+          <row>1</row>
+          <type>ImportExpectation</type>
+          <evaluationMessage>smartrics.rest.fitnesse.fixture</evaluationMessage>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_1_0', instruction='make', instanceName='tableTable_1', className='RestFixtureConfig', args=[]}</instruction>
+        <slimResult>pass(Table: Rest Fixture Config)</slimResult>
+        <expectation>
+          <status>pass</status>
+          <instructionId>tableTable_1_0</instructionId>
+          <col>0</col>
+          <row>0</row>
+          <type>ConstructionExpectation</type>
+          <evaluationMessage>Table: Rest Fixture Config</evaluationMessage>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_1_1', instruction='call', instanceName='tableTable_1', methodName='doTable', args=[[[http.client.connection.timeout, 10000]]]}</instruction>
+        <slimResult>pass()</slimResult>
+        <expectation>
+          <status>pass</status>
+          <instructionId>tableTable_1_1</instructionId>
+          <type>TableTableExpectation</type>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_2_0', instruction='make', instanceName='tableTable_2', className='RestFixture', args=[&lt;a href="http://localhost:8080/"&gt;http://localhost:8080/&lt;/a&gt;]}</instruction>
+        <slimResult>pass(Table: Rest Fixture)</slimResult>
+        <expectation>
+          <status>pass</status>
+          <instructionId>tableTable_2_0</instructionId>
+          <col>0</col>
+          <row>0</row>
+          <type>ConstructionExpectation</type>
+          <evaluationMessage>Table: Rest Fixture</evaluationMessage>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_2_1', instruction='call', instanceName='tableTable_2', methodName='doTable', args=[[[setHeaders, !-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw], [GET, /course-controller, 200, ]]]}</instruction>
+        <slimResult>error()</slimResult>
+        <expectation>
+          <status>error</status>
+          <instructionId>tableTable_2_1</instructionId>
+          <type>TableTableExpectation</type>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_3_0', instruction='make', instanceName='tableTable_3', className='RestFixture', args=[&lt;a href="http://localhost:8080/"&gt;http://localhost:8080/&lt;/a&gt;]}</instruction>
+        <slimResult>pass(Table: Rest Fixture)</slimResult>
+        <expectation>
+          <status>pass</status>
+          <instructionId>tableTable_3_0</instructionId>
+          <col>0</col>
+          <row>0</row>
+          <type>ConstructionExpectation</type>
+          <evaluationMessage>Table: Rest Fixture</evaluationMessage>
+        </expectation>
+      </instructionResult>
+      <instructionResult>
+        <instruction>{id='tableTable_3_1', instruction='call', instanceName='tableTable_3', methodName='doTable', args=[[[setHeaders, !-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw], [GET, /course-controller/user?username=student_1, 200, , student_1]]]}</instruction>
+        <slimResult>error()</slimResult>
+        <expectation>
+          <status>error</status>
+          <instructionId>tableTable_3_1</instructionId>
+          <type>TableTableExpectation</type>
+        </expectation>
+      </instructionResult>
+    </instructions>
+  </result>
+  <executionLog>
+    <testSystem>slim:fitnesse.slim.SlimService</testSystem>
+    <command>java -cp "E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\accessors-smart-1.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\activation-1.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\android-json-0.0.20131108.vaadin1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\antlr-2.7.7.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\asm-5.0.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\aspectjweaver-1.9.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\assertj-core-3.11.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\bsh-2.0b6.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\bson-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\byte-buddy-1.9.10.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\byte-buddy-agent-1.9.10.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\classmate-1.4.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-codec-1.11.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-httpclient-3.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-lang3-3.8.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-logging-1.0.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-text-1.9.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\diffutils-1.3.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\dom4j-2.1.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\fitnesse-20220815.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hamcrest-core-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hamcrest-library-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-commons-annotations-5.0.4.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-core-5.3.7.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-validator-6.0.14.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\HikariCP-3.2.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\htmllexer-2.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\htmlparser-2.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-annotations-2.9.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-core-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-databind-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-datatype-jdk8-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-datatype-jsr310-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-module-parameter-names-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jandex-2.0.5.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javassist-3.23.1-GA.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.activation-api-1.2.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.annotation-api-1.3.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.persistence-api-2.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.transaction-api-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jaxb-api-2.3.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jboss-logging-3.3.2.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jcommander-1.72.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jettison-1.3.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jjwt-0.9.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-20090211.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-path-2.4.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-smart-2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jsonassert-1.5.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jul-to-slf4j-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\junit-4.12.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\log4j-api-2.11.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\log4j-to-slf4j-2.11.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\logback-classic-1.2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\logback-core-1.2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mail-1.4.7.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mockito-core-2.23.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mongodb-driver-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mongodb-driver-core-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\objenesis-2.6.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\rhino-1.7R3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\slf4j-api-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\slf4j-jdk14-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\smartrics-RestClient-2.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\smartrics-RestFixture-4.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\snakeyaml-1.23.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-aop-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-aspects-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-beans-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-autoconfigure-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-aop-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-data-jpa-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-data-mongodb-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-jdbc-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-json-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-logging-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-security-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-test-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-tomcat-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-web-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-test-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-test-autoconfigure-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-context-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-core-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-commons-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-jpa-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-mongodb-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-expression-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-jcl-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-jdbc-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-orm-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-config-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-core-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-test-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-web-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-test-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-tx-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-web-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-webmvc-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\stax-api-1.0.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\testng-6.14.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-core-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-el-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-websocket-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\validation-api-2.0.1.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\velocity-engine-core-2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xmlpull-1.1.3.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xmlunit-core-2.6.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xpp3_min-1.1.4c.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xstream-1.4.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\fitnesse-standalone.jar" fitnesse.slim.SlimService 1</command>
+    <exitCode>0</exitCode>
+    <stdOut>WARNING: A terminally deprecated method in java.lang.System has been called
+WARNING: System::setSecurityManager has been called by fitnesse.slim.instructions.SystemExitSecurityManager (file:/E:/Facultate/Cercetare/VOICA_BERTA_IOANA_MASTER/VOICA_BERTA_IOANA_MASTER/Spring%20Boot%20Application%20Master/target/dependencies/fitnesse-20220815.jar)
+WARNING: Please consider reporting this to the maintainers of fitnesse.slim.instructions.SystemExitSecurityManager
+WARNING: System::setSecurityManager will be removed in a future release
+14:46:58.098 [main] INFO smartrics.rest.fitnesse.fixture.RestFixture - ############ Detected FitNesse version: v20220815 ###########
+
+14:46:58.135 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.useragent = Jakarta Commons-HttpClient/3.1
+
+14:46:58.136 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.version = HTTP/1.1
+
+14:46:58.137 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.connection-manager.class = class org.apache.commons.httpclient.SimpleHttpConnectionManager
+
+14:46:58.137 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.cookie-policy = default
+
+14:46:58.137 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.element-charset = US-ASCII
+
+14:46:58.138 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.protocol.content-charset = ISO-8859-1
+
+14:46:58.138 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.method.retry-handler = org.apache.commons.httpclient.DefaultHttpMethodRetryHandler@47db50c5
+
+14:46:58.138 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.dateparser.patterns = [EEE, dd MMM yyyy HH:mm:ss zzz, EEEE, dd-MMM-yy HH:mm:ss zzz, EEE MMM d HH:mm:ss yyyy, EEE, dd-MMM-yyyy HH:mm:ss z, EEE, dd-MMM-yyyy HH-mm-ss z, EEE, dd MMM yy HH:mm:ss z, EEE dd-MMM-yyyy HH:mm:ss z, EEE dd MMM yyyy HH:mm:ss z, EEE dd-MMM-yyyy HH-mm-ss z, EEE dd-MMM-yy HH:mm:ss z, EEE dd MMM yy HH:mm:ss z, EEE,dd-MMM-yy HH:mm:ss z, EEE,dd-MMM-yyyy HH:mm:ss z, EEE, dd-MM-yyyy HH:mm:ss z]
+
+14:46:58.138 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.socket.timeout = 3000
+
+14:46:58.138 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.socket.timeout = 10000
+
+14:46:58.139 [main] DEBUG org.apache.commons.httpclient.HttpClient - Java version: 17.0.5
+
+14:46:58.139 [main] DEBUG org.apache.commons.httpclient.HttpClient - Java vendor: Oracle Corporation
+
+14:46:58.140 [main] DEBUG org.apache.commons.httpclient.HttpClient - Java class path: E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\accessors-smart-1.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\activation-1.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\android-json-0.0.20131108.vaadin1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\antlr-2.7.7.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\asm-5.0.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\aspectjweaver-1.9.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\assertj-core-3.11.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\bsh-2.0b6.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\bson-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\byte-buddy-1.9.10.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\byte-buddy-agent-1.9.10.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\classmate-1.4.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-codec-1.11.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-httpclient-3.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-lang3-3.8.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-logging-1.0.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\commons-text-1.9.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\diffutils-1.3.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\dom4j-2.1.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\fitnesse-20220815.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hamcrest-core-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hamcrest-library-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-commons-annotations-5.0.4.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-core-5.3.7.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\hibernate-validator-6.0.14.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\HikariCP-3.2.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\htmllexer-2.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\htmlparser-2.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-annotations-2.9.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-core-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-databind-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-datatype-jdk8-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-datatype-jsr310-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jackson-module-parameter-names-2.9.8.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jandex-2.0.5.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javassist-3.23.1-GA.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.activation-api-1.2.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.annotation-api-1.3.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.persistence-api-2.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\javax.transaction-api-1.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jaxb-api-2.3.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jboss-logging-3.3.2.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jcommander-1.72.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jettison-1.3.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jjwt-0.9.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-20090211.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-path-2.4.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\json-smart-2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jsonassert-1.5.0.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\jul-to-slf4j-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\junit-4.12.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\log4j-api-2.11.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\log4j-to-slf4j-2.11.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\logback-classic-1.2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\logback-core-1.2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mail-1.4.7.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mockito-core-2.23.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mongodb-driver-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\mongodb-driver-core-3.8.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\objenesis-2.6.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\rhino-1.7R3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\slf4j-api-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\slf4j-jdk14-1.7.25.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\smartrics-RestClient-2.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\smartrics-RestFixture-4.4.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\snakeyaml-1.23.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-aop-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-aspects-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-beans-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-autoconfigure-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-aop-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-data-jpa-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-data-mongodb-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-jdbc-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-json-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-logging-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-security-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-test-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-tomcat-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-starter-web-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-test-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-boot-test-autoconfigure-2.1.3.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-context-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-core-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-commons-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-jpa-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-data-mongodb-2.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-expression-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-jcl-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-jdbc-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-orm-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-config-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-core-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-test-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-security-web-5.1.4.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-test-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-tx-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-web-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\spring-webmvc-5.1.5.RELEASE.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\stax-api-1.0.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\testng-6.14.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-core-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-el-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\tomcat-embed-websocket-9.0.16.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\validation-api-2.0.1.Final.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\velocity-engine-core-2.3.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xmlpull-1.1.3.1.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xmlunit-core-2.6.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xpp3_min-1.1.4c.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\target\dependencies\xstream-1.4.2.jar;E:\Facultate\Cercetare\VOICA_BERTA_IOANA_MASTER\VOICA_BERTA_IOANA_MASTER\Spring Boot Application Master\fitnesse-standalone.jar
+
+14:46:58.140 [main] DEBUG org.apache.commons.httpclient.HttpClient - Operating system name: Windows 11
+
+14:46:58.140 [main] DEBUG org.apache.commons.httpclient.HttpClient - Operating system architecture: amd64
+
+14:46:58.140 [main] DEBUG org.apache.commons.httpclient.HttpClient - Operating system version: 10.0
+
+14:46:58.170 [main] DEBUG org.apache.commons.httpclient.HttpClient - SUN 17.0: SUN (DSA key/parameter generation; DSA signing; SHA-1, MD5 digests; SecureRandom; X.509 certificates; PKCS12, JKS &amp; DKS keystores; PKIX CertPathValidator; PKIX CertPathBuilder; LDAP, Collection CertStores, JavaPolicy Policy; JavaLoginConfig Configuration)
+
+14:46:58.170 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunRsaSign 17.0: Sun RSA signature provider
+
+14:46:58.170 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunEC 17.0: Sun Elliptic Curve provider
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunJSSE 17.0: Sun JSSE provider(PKCS12, SunX509/PKIX key/trust factories, SSLv3/TLSv1/TLSv1.1/TLSv1.2/TLSv1.3/DTLSv1.0/DTLSv1.2)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunJCE 17.0: SunJCE Provider (implements RSA, DES, Triple DES, AES, Blowfish, ARCFOUR, RC2, PBE, Diffie-Hellman, HMAC, ChaCha20)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunJGSS 17.0: Sun (Kerberos v5, SPNEGO)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunSASL 17.0: Sun SASL provider(implements client mechanisms for: DIGEST-MD5, EXTERNAL, PLAIN, CRAM-MD5, NTLM; server mechanisms for: DIGEST-MD5, CRAM-MD5, NTLM)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - XMLDSig 17.0: XMLDSig (DOM XMLSignatureFactory; DOM KeyInfoFactory; C14N 1.0, C14N 1.1, Exclusive C14N, Base64, Enveloped, XPath, XPath2, XSLT TransformServices)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunPCSC 17.0: Sun PC/SC provider
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - JdkLDAP 17.0: JdkLDAP Provider (implements LDAP CertStore)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - JdkSASL 17.0: JDK SASL provider(implements client and server mechanisms for GSSAPI)
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunMSCAPI 17.0: Sun's Microsoft Crypto API provider
+
+14:46:58.171 [main] DEBUG org.apache.commons.httpclient.HttpClient - SunPKCS11 17.0: Unconfigured and unusable PKCS11 provider
+
+14:46:58.179 [main] DEBUG smartrics.rest.client.RestClientImpl - request: Get /course-controller
+Authorization:Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+[empty/null body]
+
+14:46:58.191 [main] INFO smartrics.rest.client.RestClientImpl - Http Request URI : http://localhost:8080/course-controller
+
+14:46:58.191 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Method Class : class org.apache.commons.httpclient.methods.GetMethod 
+
+14:46:58.192 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Header : [Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+] 
+
+14:46:58.196 [main] DEBUG org.apache.commons.httpclient.HttpConnection - Open connection to localhost:8080
+
+14:46:58.205 [main] DEBUG httpclient.wire.header - &gt;&gt; "GET /course-controller HTTP/1.1[\r][\n]"
+
+14:46:58.205 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Adding Host request header
+
+14:46:58.209 [main] DEBUG httpclient.wire.header - &gt;&gt; "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw[\r][\n]"
+
+14:46:58.210 [main] DEBUG httpclient.wire.header - &gt;&gt; "User-Agent: Jakarta Commons-HttpClient/3.1[\r][\n]"
+
+14:46:58.210 [main] DEBUG httpclient.wire.header - &gt;&gt; "Host: localhost:8080[\r][\n]"
+
+14:46:58.210 [main] DEBUG httpclient.wire.header - &gt;&gt; "[\r][\n]"
+
+14:46:58.216 [main] DEBUG httpclient.wire.header - &lt;&lt; "HTTP/1.1 200 [\r][\n]"
+
+14:46:58.217 [main] DEBUG httpclient.wire.header - &lt;&lt; "HTTP/1.1 200 [\r][\n]"
+
+14:46:58.217 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-Content-Type-Options: nosniff[\r][\n]"
+
+14:46:58.217 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-XSS-Protection: 1; mode=block[\r][\n]"
+
+14:46:58.217 [main] DEBUG httpclient.wire.header - &lt;&lt; "Cache-Control: no-cache, no-store, max-age=0, must-revalidate[\r][\n]"
+
+14:46:58.217 [main] DEBUG httpclient.wire.header - &lt;&lt; "Pragma: no-cache[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "Expires: 0[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-Frame-Options: DENY[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "Content-Type: application/json;charset=UTF-8[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "Transfer-Encoding: chunked[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "Date: Sat, 04 Feb 2023 12:46:58 GMT[\r][\n]"
+
+14:46:58.218 [main] DEBUG httpclient.wire.header - &lt;&lt; "[\r][\n]"
+
+14:46:58.219 [main] WARN org.apache.commons.httpclient.HttpMethodBase - Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended.
+
+14:46:58.219 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Buffering response body
+
+14:46:58.219 [main] DEBUG httpclient.wire.content - &lt;&lt; "1"
+
+14:46:58.219 [main] DEBUG httpclient.wire.content - &lt;&lt; "5"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "f"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1},{"uniqueId":"d3cb554d-0e1d-437a-aad3-26b28f3c4305","completeName":"Course_2","abbreviation":"C2","description":"This is course_2","responsible":["teacher"],"assignedUsers":0}]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "0"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.220 [main] DEBUG httpclient.wire.header - &lt;&lt; "[\r][\n]"
+
+14:46:58.220 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Resorting to protocol version default close connection policy
+
+14:46:58.220 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Should NOT close connection, using HTTP/1.1
+
+14:46:58.221 [main] DEBUG org.apache.commons.httpclient.HttpConnection - Releasing connection back to connection manager.
+
+14:46:58.221 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Path : /course-controller
+
+14:46:58.221 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Header : [Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+, User-Agent: Jakarta Commons-HttpClient/3.1
+, Host: localhost:8080
+] 
+
+14:46:58.221 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Response Status : HTTP/1.1 200 
+
+14:46:58.221 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Response Body : [{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1},{"uniqueId":"d3cb554d-0e1d-437a-aad3-26b28f3c4305","completeName":"Course_2","abbreviation":"C2","description":"This is course_2","responsible":["teacher"],"assignedUsers":0}]
+
+14:46:58.221 [main] DEBUG smartrics.rest.client.RestClientImpl - response: [200] 
+X-Content-Type-Options:nosniff
+X-XSS-Protection:1; mode=block
+Cache-Control:no-cache, no-store, max-age=0, must-revalidate
+Pragma:no-cache
+Expires:0
+X-Frame-Options:DENY
+Content-Type:application/json;charset=UTF-8
+Transfer-Encoding:chunked
+Date:Sat, 04 Feb 2023 12:46:58 GMT
+
+[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1},{"uniqueId":"d3cb554d-0e1d-437a-aad3-26b28f3c4305","completeName":"Course_2","abbreviation":"C2","description":"This is course_2","responsible":["teacher"],"assignedUsers":0}]
+
+14:46:58.226 [main] ERROR smartrics.rest.fitnesse.fixture.RestFixture - Exception occurred when processing method=Get
+java.lang.IllegalStateException: You must specify a body cell
+	at smartrics.rest.fitnesse.fixture.RestFixture.completeHttpMethodExecution(RestFixture.java:1178)
+	at smartrics.rest.fitnesse.fixture.RestFixture.doMethod(RestFixture.java:1094)
+	at smartrics.rest.fitnesse.fixture.RestFixture.doMethod(RestFixture.java:1081)
+	at smartrics.rest.fitnesse.fixture.RestFixture.GET(RestFixture.java:760)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at smartrics.rest.fitnesse.fixture.RestFixture.processRow(RestFixture.java:1021)
+	at smartrics.rest.fitnesse.fixture.RestFixture.processSlimRow(RestFixture.java:1367)
+	at smartrics.rest.fitnesse.fixture.RestFixture.doTable(RestFixture.java:432)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at fitnesse.slim.fixtureInteraction.SimpleInteraction.methodInvoke(SimpleInteraction.java:322)
+	at fitnesse.slim.fixtureInteraction.SimpleInteraction.callMethod(SimpleInteraction.java:307)
+	at fitnesse.slim.fixtureInteraction.SimpleInteraction.invokeMethod(SimpleInteraction.java:290)
+	at fitnesse.slim.fixtureInteraction.SimpleInteraction.findAndInvoke(SimpleInteraction.java:217)
+	at fitnesse.slim.MethodExecutor.findAndInvoke(MethodExecutor.java:18)
+	at fitnesse.slim.FixtureMethodExecutor.execute(FixtureMethodExecutor.java:18)
+	at fitnesse.slim.StatementExecutor.getMethodExecutionResult(StatementExecutor.java:139)
+	at fitnesse.slim.StatementExecutor.call(StatementExecutor.java:112)
+	at fitnesse.slim.instructions.CallAndOptionalAssignInstruction.executeInternal(CallAndOptionalAssignInstruction.java:30)
+	at fitnesse.slim.instructions.Instruction.execute(Instruction.java:29)
+	at fitnesse.slim.ListExecutor$Executive.executeStatement(ListExecutor.java:49)
+	at fitnesse.slim.ListExecutor$Executive.executeStatements(ListExecutor.java:43)
+	at fitnesse.slim.ListExecutor.execute(ListExecutor.java:85)
+	at fitnesse.slim.SlimServer.executeInstructions(SlimServer.java:82)
+	at fitnesse.slim.SlimServer.processOneSetOfInstructions(SlimServer.java:75)
+	at fitnesse.slim.SlimServer.tryProcessInstructions(SlimServer.java:62)
+	at fitnesse.slim.SlimServer.serve(SlimServer.java:47)
+	at fitnesse.slim.SlimService.handle(SlimService.java:169)
+	at fitnesse.slim.SlimService.acceptOne(SlimService.java:177)
+	at fitnesse.slim.SlimService.accept(SlimService.java:139)
+	at fitnesse.slim.SlimService.startWithFactory(SlimService.java:92)
+	at fitnesse.slim.SlimService.main(SlimService.java:57)
+
+14:46:58.228 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.socket.timeout = 3000
+
+14:46:58.228 [main] DEBUG org.apache.commons.httpclient.params.DefaultHttpParams - Set parameter http.socket.timeout = 10000
+
+14:46:58.229 [main] DEBUG smartrics.rest.client.RestClientImpl - request: Get /course-controller/user?username=student_1
+Authorization:Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+[empty/null body]
+
+14:46:58.229 [main] INFO smartrics.rest.client.RestClientImpl - Http Request URI : http://localhost:8080/course-controller/user?username=student_1
+
+14:46:58.229 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Method Class : class org.apache.commons.httpclient.methods.GetMethod 
+
+14:46:58.229 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Header : [Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+] 
+
+14:46:58.229 [main] DEBUG org.apache.commons.httpclient.HttpConnection - Open connection to localhost:8080
+
+14:46:58.230 [main] DEBUG httpclient.wire.header - &gt;&gt; "GET /course-controller/user?username=student_1 HTTP/1.1[\r][\n]"
+
+14:46:58.230 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Adding Host request header
+
+14:46:58.230 [main] DEBUG httpclient.wire.header - &gt;&gt; "Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw[\r][\n]"
+
+14:46:58.230 [main] DEBUG httpclient.wire.header - &gt;&gt; "User-Agent: Jakarta Commons-HttpClient/3.1[\r][\n]"
+
+14:46:58.230 [main] DEBUG httpclient.wire.header - &gt;&gt; "Host: localhost:8080[\r][\n]"
+
+14:46:58.230 [main] DEBUG httpclient.wire.header - &gt;&gt; "[\r][\n]"
+
+14:46:58.238 [main] DEBUG httpclient.wire.header - &lt;&lt; "HTTP/1.1 200 [\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "HTTP/1.1 200 [\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-Content-Type-Options: nosniff[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-XSS-Protection: 1; mode=block[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Cache-Control: no-cache, no-store, max-age=0, must-revalidate[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Pragma: no-cache[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Expires: 0[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "X-Frame-Options: DENY[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Content-Type: application/json;charset=UTF-8[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Transfer-Encoding: chunked[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "Date: Sat, 04 Feb 2023 12:46:58 GMT[\r][\n]"
+
+14:46:58.239 [main] DEBUG httpclient.wire.header - &lt;&lt; "[\r][\n]"
+
+14:46:58.239 [main] WARN org.apache.commons.httpclient.HttpMethodBase - Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended.
+
+14:46:58.239 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Buffering response body
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "b"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "0"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1}]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "0"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\r]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.content - &lt;&lt; "[\n]"
+
+14:46:58.240 [main] DEBUG httpclient.wire.header - &lt;&lt; "[\r][\n]"
+
+14:46:58.240 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Resorting to protocol version default close connection policy
+
+14:46:58.240 [main] DEBUG org.apache.commons.httpclient.HttpMethodBase - Should NOT close connection, using HTTP/1.1
+
+14:46:58.240 [main] DEBUG org.apache.commons.httpclient.HttpConnection - Releasing connection back to connection manager.
+
+14:46:58.240 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Path : /course-controller/user
+
+14:46:58.240 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Request Header : [Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3NTUxMjQ2MCwiZXhwIjoxNjc1NTk4ODYwfQ.6qgNQJ0YReeMewkJFC5LsUJHfsOJMAE-n9b2govu2jwCoB3gNryztc4LCU-mhZODI-jbELU5IStQjYXIgAnFDw
+, User-Agent: Jakarta Commons-HttpClient/3.1
+, Host: localhost:8080
+] 
+
+14:46:58.241 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Response Status : HTTP/1.1 200 
+
+14:46:58.241 [main] DEBUG smartrics.rest.client.RestClientImpl - Http Response Body : [{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1}]
+
+14:46:58.241 [main] DEBUG smartrics.rest.client.RestClientImpl - response: [200] 
+X-Content-Type-Options:nosniff
+X-XSS-Protection:1; mode=block
+Cache-Control:no-cache, no-store, max-age=0, must-revalidate
+Pragma:no-cache
+Expires:0
+X-Frame-Options:DENY
+Content-Type:application/json;charset=UTF-8
+Transfer-Encoding:chunked
+Date:Sat, 04 Feb 2023 12:46:58 GMT
+
+[{"uniqueId":"a6b156b0-1c8b-4b2c-9f25-b708afb99d5f","completeName":"Course_1","abbreviation":"C1","description":"This is course_1","responsible":["teacher"],"assignedUsers":1}]
+
+</stdOut>
+    <stdErr>SLF4J: Class path contains multiple SLF4J bindings.
+
+SLF4J: Found binding in [jar:file:/E:/Facultate/Cercetare/VOICA_BERTA_IOANA_MASTER/VOICA_BERTA_IOANA_MASTER/Spring%20Boot%20Application%20Master/target/dependencies/logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+
+SLF4J: Found binding in [jar:file:/E:/Facultate/Cercetare/VOICA_BERTA_IOANA_MASTER/VOICA_BERTA_IOANA_MASTER/Spring%20Boot%20Application%20Master/target/dependencies/slf4j-jdk14-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+
+SLF4J: Found binding in [jar:file:/E:/Facultate/Cercetare/VOICA_BERTA_IOANA_MASTER/VOICA_BERTA_IOANA_MASTER/Spring%20Boot%20Application%20Master/fitnesse-standalone.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+
+</stdErr>
+  </executionLog>
+  <finalCounts>
+    <right>0</right>
+    <wrong>0</wrong>
+    <ignores>0</ignores>
+    <exceptions>1</exceptions>
+  </finalCounts>
+  <totalRunTimeInMillis>563</totalRunTimeInMillis>
+</testResults>
+
