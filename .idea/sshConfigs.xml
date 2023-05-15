@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="https://github.com/bertavoica/Spring-Boot-Application-for-University-Management-Web-Platform" id="5c126749-9993-4aa4-9a22-84d19ad8b6a4" keyPath="C:\Users\berta\.ssh\.ssh\id_ed25519.pub" port="22" nameFormat="DESCRIPTIVE" username="bertavoica" />
+    </configs>
+  </component>
+</project>

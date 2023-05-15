@@ -43,12 +43,18 @@ public class TitleController {
                                       Principal principal) {
         Title title;
 
-        if (titleRepository.findByName(titleAddRequest.getName()).isPresent())
+        if (titleRepository.findByName(titleAddRequest.getName()).isPresent()) {
+            System.out.println("test");
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TitleExists").get(userService.getPreferredLanguage(principal)) + " " + titleAddRequest.getName());
+        }
 
+
+        System.out.println("bhdsjd");
         title = new Title();
         title.setName(titleAddRequest.getName());
         titleRepository.save(title);
+
+        System.out.println("dsbhg");
 
         return ResponseEntity.ok(Utils.languageDictionary.get("TitleAdded").get(userService.getPreferredLanguage(principal)) + " " + titleAddRequest.getName());
     }
