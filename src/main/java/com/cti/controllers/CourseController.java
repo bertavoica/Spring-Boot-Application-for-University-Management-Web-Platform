@@ -98,9 +98,9 @@ public class CourseController {
         } catch (UsernameIsStudentException e) {
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_IS_STUDENT).get(userService.getPreferredLanguage(principal)) + " " + username);
         } catch (UsernameNotExistsException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERANAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + username);
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + username);
         } catch (UsernameAlreadyResponsibleException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERANAME_ALREADY_RESPONSIBLE).get(userService.getPreferredLanguage(principal))  + " " + username);
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_ALREADY_RESPONSIBLE).get(userService.getPreferredLanguage(principal))  + " " + username);
 
         }
     }
@@ -112,11 +112,11 @@ public class CourseController {
                                                Principal principal) {
         try {
             Course course = this.courseService.removeResponsible(uniqueId, username);
-            return ResponseEntity.ok(Utils.languageDictionary.get("CourseRemovedResponsible").get(userService.getPreferredLanguage(principal)) + " " + course.getCompleteName());
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.COURSE_REMOVED_RESPONSIBLE).get(userService.getPreferredLanguage(principal)) + " " + course.getCompleteName());
         } catch (CourseNotFoundException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("CourseNotFound").get(userService.getPreferredLanguage(principal)));
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.COURSE_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
         } catch (CourseNoResponsibleException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("CourseNoResponsible").get(userService.getPreferredLanguage(principal)) + " " + username);
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.COURSE_NO_RESPONSIBLE).get(userService.getPreferredLanguage(principal)) + " " + username);
         }
     }
 
