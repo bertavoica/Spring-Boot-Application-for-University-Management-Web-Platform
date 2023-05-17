@@ -19,4 +19,9 @@ public interface ApplicationConstants {
     String PROJECT_NOT_FOUND = "ProjectNotFound";
     String STUDENT_ASSIGNED_PROJECT = "StudentAssignedProject";
     String ASSIGNED_PROJECT = "AssignedProject";
+    String NO_STUDENTS_IN_GROUP = "NoStudentsInGroup";
+    String STUDENTS_GROUP_ALREADY_ASSIGNED = "StudentsGroupAlreadyAssigned";
+    String STUDENTS_GROUP_ASSIGNED = "StudentsGroupAssigned";
+    String PROJECT_TEMPLATE_ADDED = "ProjectTemplateAdded";
+    String PROJECT_TEMPLATE_UPDATED = "ProjectTemplateUpdated";
 }

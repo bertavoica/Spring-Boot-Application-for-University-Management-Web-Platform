@@ -1,21 +1,25 @@
 package com.cti.service;
 
 import com.cti.exception.*;
+import com.cti.models.Course;
 import com.cti.models.EProjectStatus;
 import com.cti.models.Project;
 import com.cti.models.Student;
 import com.cti.payload.request.AssignmentUploadRequest;
 import com.cti.payload.request.GradeFeedbackAssignmentRequest;
+import com.cti.payload.request.ProjectAddRequest;
+import com.cti.payload.request.ProjectUpdateRequest;
+import com.cti.repository.CourseRepository;
 import com.cti.repository.ProjectRepository;
 import com.cti.repository.StudentRepository;
 import com.cti.utils.Utils;
 import org.json.JSONArray;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -23,17 +27,20 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     private final UserService userService;
     private final EmailService emailService;
 
     public ProjectService(
             ProjectRepository projectRepository,
             StudentRepository studentRepository,
+            CourseRepository courseRepository,
             UserService userService,
             EmailService emailService
     ) {
         this.projectRepository = projectRepository;
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
         this.userService = userService;
         this.emailService = emailService;
     }
@@ -378,5 +385,108 @@ public class ProjectService {
         student.getProjects().add(project);
 
         studentRepository.save(student);
+    }
+
+    public void assignProjectToGroup(String groupName, String uniqueId) throws NoStudentsInGroupException, ProjectNotFoundException, StudentsGroupAlreadyAssignedException {
+        Project project;
+        Optional<Project> optionalProject;
+        List<Student> students;
+        int studentsAssigned = 0;
+        boolean projectAssigned;
+
+        students = studentRepository.findByGroup(groupName);
+        if (students.size() == 0) {
+            throw new NoStudentsInGroupException();
+        }
+
+        optionalProject = projectRepository.findByUniqueId(uniqueId);
+        if (!optionalProject.isPresent()) {
+            throw new ProjectNotFoundException();
+        }
+
+        project = optionalProject.get();
+
+        for (Student student : students) {
+            projectAssigned = false;
+            for (Project activeProject : student.getProjects())
+                if (activeProject.getUniqueId().equals(uniqueId))
+                    projectAssigned = true;
+
+            if (!projectAssigned) {
+                studentsAssigned++;
+                project.setAssigned(LocalDateTime.now());
+                project.setAssigneeAddress(student.getEmailAddress());
+                project.setAssignee(student.getUsername());
+                project.setStatus(EProjectStatus.ASSIGNED);
+                project.setUniqueId(Utils.generateUniqueID());
+                student.getProjects().add(project);
+                studentRepository.save(student);
+            }
+        }
+
+        if (studentsAssigned == 0) {
+            throw new StudentsGroupAlreadyAssignedException();
+        }
+    }
+
+    public void addProjectTemplate(ProjectAddRequest projectAddRequest) throws CourseNotFoundException {
+        Project project;
+        Course course;
+        Optional<Course> optionalCourse;
+        DateTimeFormatter formatter;
+        String inputTime;
+
+        optionalCourse = courseRepository.findByUniqueId(projectAddRequest.getCourseUniqueId());
+        if (!optionalCourse.isPresent()) {
+            throw new CourseNotFoundException();
+        }
+
+        course = optionalCourse.get();
+
+        project = new Project(projectAddRequest);
+        project.setCourse(course);
+
+        project.setOwner(projectAddRequest.getOwner());
+
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        inputTime = projectAddRequest.getInputDate() + " " + projectAddRequest.getInputTime();
+        project.setDeadline(LocalDateTime.parse(inputTime, formatter));
+
+        projectRepository.save(project);
+    }
+
+    public void updateProject(ProjectUpdateRequest projectUpdateRequest) throws ProjectNotFoundException, CourseNotFoundException {
+        Project project;
+        Optional<Project> optionalProject;
+        Course course;
+        Optional<Course> optionalCourse;
+        DateTimeFormatter formatter;
+        String inputTime;
+
+        optionalProject = projectRepository.findByUniqueId(projectUpdateRequest.getUniqueId());
+        if (!optionalProject.isPresent()) {
+            throw new ProjectNotFoundException();
+        }
+
+        project = optionalProject.get();
+        project.setProjectName(projectUpdateRequest.getProjectName());
+        project.setDescription(projectUpdateRequest.getDescription());
+
+        if (projectUpdateRequest.getCourseUniqueId() != null) {
+            optionalCourse = courseRepository.findByUniqueId(projectUpdateRequest.getCourseUniqueId());
+            if (!optionalCourse.isPresent()) {
+                throw new CourseNotFoundException();
+            }
+            course = optionalCourse.get();
+            project.setCourse(course);
+        }
+
+        if (projectUpdateRequest.getInputDate() != null && projectUpdateRequest.getInputTime() != null) {
+            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            inputTime = projectUpdateRequest.getInputDate() + " " + projectUpdateRequest.getInputTime();
+            project.setDeadline(LocalDateTime.parse(inputTime, formatter));
+        }
+
+        projectRepository.save(project);
     }
 }

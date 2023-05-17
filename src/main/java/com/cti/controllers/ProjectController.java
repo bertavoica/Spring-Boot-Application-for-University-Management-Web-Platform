@@ -1,23 +1,15 @@
 package com.cti.controllers;
 
 import com.cti.exception.*;
-import com.cti.models.EProjectStatus;
-import com.cti.models.Course;
-import com.cti.models.Project;
-import com.cti.models.Student;
 import com.cti.payload.request.AssignmentUploadRequest;
 import com.cti.payload.request.GradeFeedbackAssignmentRequest;
 import com.cti.payload.request.ProjectAddRequest;
 import com.cti.payload.request.ProjectUpdateRequest;
-import com.cti.repository.CourseRepository;
 import com.cti.repository.ProjectRepository;
-import com.cti.repository.StudentRepository;
-import com.cti.service.EmailService;
 import com.cti.service.ProjectService;
 import com.cti.service.UserService;
 import com.cti.utils.ApplicationConstants;
 import com.cti.utils.Utils;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -27,16 +19,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -47,16 +35,7 @@ public class ProjectController {
     private ProjectRepository projectRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private EmailService emailService;
 
     @Autowired
     private ProjectService projectService;
@@ -160,115 +139,42 @@ public class ProjectController {
     public ResponseEntity<?> assignProjectToGroup(@RequestParam(name = "uniqueId", defaultValue = "") String uniqueId,
                                                   @RequestParam(name = "groupName", defaultValue = "") String groupName,
                                                   Principal principal) {
-        Project project;
-        Optional<Project> optionalProject;
-        List<Student> students;
-        int studentsAssigned = 0;
-        boolean projectAssigned;
-
-        students = studentRepository.findByGroup(groupName);
-        if (students.size() == 0) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("NoStudentsInGroup").get(userService.getPreferredLanguage(principal)) + " " + groupName);
+        try {
+            this.projectService.assignProjectToGroup(groupName, uniqueId);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.STUDENTS_GROUP_ASSIGNED).get(userService.getPreferredLanguage(principal)) + " " + "");
+        } catch (NoStudentsInGroupException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.NO_STUDENTS_IN_GROUP).get(userService.getPreferredLanguage(principal)) + " " + groupName);
+        } catch (ProjectNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.PROJECT_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
+        } catch (StudentsGroupAlreadyAssignedException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENTS_GROUP_ALREADY_ASSIGNED).get(userService.getPreferredLanguage(principal)) + " " + "");
         }
-
-        optionalProject = projectRepository.findByUniqueId(uniqueId);
-        if (!optionalProject.isPresent()) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("ProjectNotFound").get(userService.getPreferredLanguage(principal)));
-        }
-
-        project = optionalProject.get();
-
-        for (Student student : students) {
-            projectAssigned = false;
-            for (Project activeProject : student.getProjects())
-                if (activeProject.getUniqueId().equals(uniqueId))
-                    projectAssigned = true;
-
-            if (!projectAssigned) {
-                studentsAssigned++;
-                project.setAssigned(LocalDateTime.now());
-                project.setAssigneeAddress(student.getEmailAddress());
-                project.setAssignee(student.getUsername());
-                project.setStatus(EProjectStatus.ASSIGNED);
-                project.setUniqueId(Utils.generateUniqueID());
-                student.getProjects().add(project);
-                studentRepository.save(student);
-            }
-        }
-
-        if (studentsAssigned == 0) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("StudentsGroupAlreadyAssigned").get(userService.getPreferredLanguage(principal)) + " " + project.getProjectName());
-        }
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("StudentsGroupAssigned").get(userService.getPreferredLanguage(principal)) + " " + studentsAssigned);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> addProjectTemplate(@Valid @RequestBody ProjectAddRequest projectAddRequest,
                                                 Principal principal) {
-        Project project;
-        Course course;
-        Optional<Course> optionalCourse;
-        DateTimeFormatter formatter;
-        String inputTime;
-
-        optionalCourse = courseRepository.findByUniqueId(projectAddRequest.getCourseUniqueId());
-        if (!optionalCourse.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("CourseNotFound").get(userService.getPreferredLanguage(principal)));
-
-        course = optionalCourse.get();
-
-        project = new Project(projectAddRequest);
-        project.setCourse(course);
-
-        project.setOwner(projectAddRequest.getOwner());
-
-        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        inputTime = projectAddRequest.getInputDate() + " " + projectAddRequest.getInputTime();
-        project.setDeadline(LocalDateTime.parse(inputTime, formatter));
-
-        projectRepository.save(project);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("ProjectTemplateAdded").get(userService.getPreferredLanguage(principal)) + " " + projectAddRequest.getProjectName());
+        try {
+            this.projectService.addProjectTemplate(projectAddRequest);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.PROJECT_TEMPLATE_ADDED).get(userService.getPreferredLanguage(principal)) + " " + projectAddRequest.getProjectName());
+        } catch (CourseNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.COURSE_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
+        }
     }
 
     @PutMapping
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateProject(@Valid @RequestBody ProjectUpdateRequest projectUpdateRequest,
                                            Principal principal) {
-        Project project;
-        Optional<Project> optionalProject;
-        Course course;
-        Optional<Course> optionalCourse;
-        DateTimeFormatter formatter;
-        String inputTime;
-
-        optionalProject = projectRepository.findByUniqueId(projectUpdateRequest.getUniqueId());
-        if (!optionalProject.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("ProjectNotFound").get(userService.getPreferredLanguage(principal)));
-
-        project = optionalProject.get();
-        project.setProjectName(projectUpdateRequest.getProjectName());
-        project.setDescription(projectUpdateRequest.getDescription());
-
-        if (projectUpdateRequest.getCourseUniqueId() != null) {
-            optionalCourse = courseRepository.findByUniqueId(projectUpdateRequest.getCourseUniqueId());
-            if (!optionalCourse.isPresent())
-                return ResponseEntity.badRequest().body(Utils.languageDictionary.get("CourseNotFound").get(userService.getPreferredLanguage(principal)));
-            course = optionalCourse.get();
-            project.setCourse(course);
+        try {
+            this.projectService.updateProject(projectUpdateRequest);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.PROJECT_TEMPLATE_UPDATED).get(userService.getPreferredLanguage(principal)));
+        } catch (ProjectNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.PROJECT_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
+        } catch (CourseNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.COURSE_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
         }
-
-        if (projectUpdateRequest.getInputDate() != null && projectUpdateRequest.getInputTime() != null) {
-            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            inputTime = projectUpdateRequest.getInputDate() + " " + projectUpdateRequest.getInputTime();
-            project.setDeadline(LocalDateTime.parse(inputTime, formatter));
-        }
-
-        projectRepository.save(project);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("ProjectTemplateUpdated").get(userService.getPreferredLanguage(principal)));
     }
 
     @DeleteMapping
