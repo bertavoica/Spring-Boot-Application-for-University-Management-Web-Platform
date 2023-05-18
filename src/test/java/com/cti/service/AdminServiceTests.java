@@ -27,7 +27,7 @@ import static org.testng.AssertJUnit.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class AdminServiceTest {
+public class AdminServiceTests {
     @Mock
     private UserRepository userRepository;
 
@@ -51,8 +51,9 @@ public class AdminServiceTest {
 
     @BeforeMethod
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
+
 
     @Test
     public void prepareAdminWhenUserHasUsernameTest() {
