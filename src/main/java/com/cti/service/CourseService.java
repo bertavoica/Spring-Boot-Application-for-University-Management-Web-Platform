@@ -56,8 +56,9 @@ public class CourseService {
         } else {
             allCourses = courseRepository.findAll();
             for (Course course : allCourses) {
-                if (course.getResponsible() != null && course.getResponsible().contains(username))
+                if (course.getResponsible() != null && course.getResponsible().contains(username)) {
                     result.add(course);
+                }
             }
         }
 
@@ -183,8 +184,9 @@ public class CourseService {
         }
 
         course = optionalCourse.get();
-        if (course.getResponsible() == null)
+        if (course.getResponsible() == null) {
             return new ArrayList<>();
+        }
 
         return course.getResponsible();
     }
