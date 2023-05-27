@@ -4,13 +4,13 @@ import com.cti.exception.*;
 import com.cti.models.Course;
 import com.cti.models.Student;
 import com.cti.models.User;
+import com.cti.payload.request.CourseAddRequest;
 import com.cti.repository.CourseRepository;
 import com.cti.repository.StudentRepository;
 import com.cti.repository.UserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testng.annotations.BeforeMethod;
@@ -50,6 +50,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Get all courses successfully.")
     public void getAllCoursesTest() {
         List<Course> courses = List.of(new Course(), new Course());
         when(this.courseRepository.findAll()).thenReturn(courses);
@@ -59,6 +60,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Get user courses successfully.")
     public void getUserCoursesTest() {
         Course course1 = new Course();
         course1.setCompleteName("Course1");
@@ -84,6 +86,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Get enrolled students successfully.")
     public void getEnrolledStudentsTest() {
         Student student = new Student();
         student.setCoursesIds(List.of(UNIQUE_ID));
@@ -96,6 +99,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Add user courses successfully.")
     public void addUserCoursesTest() throws CourseNotFoundException, StudentNotExistsException, StudentAlreadyEnrolledException {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
@@ -122,6 +126,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Remove user courses successfully.")
     public void removeUserCoursesTest() throws StudentAlreadyEnrolledException, CourseNotFoundException, StudentNotExistsException {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
@@ -147,6 +152,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Add responsible successfully.")
     public void addResponsibleTest() throws UsernameNotExistsException, CourseNotFoundException, UsernameIsStudentException, UsernameAlreadyResponsibleException {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
@@ -168,6 +174,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Get responsible successfully.")
     public void getResponsibleTest() throws CourseNotFoundException {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
@@ -182,6 +189,7 @@ public class CourseServiceTests {
     }
 
     @Test
+    @DisplayName("Remove responsible successfully.")
     public void removeResponsible() throws CourseNotFoundException, CourseNoResponsibleException {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
@@ -193,5 +201,29 @@ public class CourseServiceTests {
         Course course = courseService.removeResponsible(UNIQUE_ID, USERNAME);
 
         assertTrue(course.getResponsible().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Add course successfully.")
+    public void addCourseTest() {
+        CourseAddRequest courseAddRequest = new CourseAddRequest();
+        Course course = new Course(courseAddRequest);
+
+        ArgumentCaptor<Course> courseCaptor = ArgumentCaptor.forClass(Course.class);
+        Mockito.when(courseRepository.save(courseCaptor.capture())).thenReturn(course);
+        Mockito.when(courseRepository.findAll()).thenReturn(List.of(course));
+
+        List<Course> result = this.courseService.addCourse(courseAddRequest);
+
+        Mockito.verify(this.courseRepository).save(courseCaptor.getValue());
+        assertEquals(result.size(), 1);
+        assertEquals(courseCaptor.getValue(), course);
+    }
+
+    @Test
+    @DisplayName("Delete a course successfully.")
+    public void deleteCourseTest() {
+        Mockito.doNothing().when(this.courseRepository).deleteByUniqueId(UNIQUE_ID);
+
     }
 }

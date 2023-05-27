@@ -7,6 +7,7 @@ import com.cti.repository.StudentRepository;
 import com.cti.repository.TeacherRepository;
 import com.cti.repository.UserRepository;
 import com.cti.utils.Utils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -56,6 +57,7 @@ public class AdminServiceTests {
 
 
     @Test
+    @DisplayName("Prepare admin when user has username.")
     public void prepareAdminWhenUserHasUsernameTest() {
         User user = new User();
         String username = "test";
@@ -74,6 +76,7 @@ public class AdminServiceTests {
     }
 
     @Test
+    @DisplayName("Prepare admin when user has no username.")
     public void prepareAdminWhenUserHasNoUsernameTest() {
         User user = new User();
         User secondUser = new User();
@@ -97,23 +100,25 @@ public class AdminServiceTests {
 
     }
 
-        @Test
-        public void deleteByUsernameSuccessfully() {
-            String firstUserUsername = "firstUserUsername";
-            String secondUserUsername = "secondUserUsername";
+    @Test
+    @DisplayName("Delete by username successfully.")
+    public void deleteByUsernameSuccessfully() {
+        String firstUserUsername = "firstUserUsername";
+        String secondUserUsername = "secondUserUsername";
 
-            User firstUser = new User();
-            firstUser.setUsername(firstUserUsername);
-            User secondUser = new User();
-            secondUser.setUsername(secondUserUsername);
+        User firstUser = new User();
+        firstUser.setUsername(firstUserUsername);
+        User secondUser = new User();
+        secondUser.setUsername(secondUserUsername);
 
-            Mockito.doNothing().when(this.userRepository).deleteByUsername(secondUserUsername);
-            List<User> expectedResult = List.of(firstUser);
+        Mockito.doNothing().when(this.userRepository).deleteByUsername(secondUserUsername);
+        List<User> expectedResult = List.of(firstUser);
 
-            assertEquals(1, expectedResult.size());
-        }
+        assertEquals(1, expectedResult.size());
+    }
 
     @Test
+    @DisplayName("Update admin when optional user is not present.")
     public void updateAdminWhenOptionalUserIsNotPresent() throws Exception {
         String username = "userNotFound";
         AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest();
@@ -133,6 +138,7 @@ public class AdminServiceTests {
     }
 
     @Test
+    @DisplayName("Update admin when optional student is not present.")
     public void updateAdminWhenOptionalStudentIsNotPresent() throws Exception {
         AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest();
         adminUpdateRequest.setUsername("testuser");
@@ -147,6 +153,7 @@ public class AdminServiceTests {
     }
 
     @Test
+    @DisplayName("Update admin when optional teacher is not present.")
     public void updateAdminWhenOptionalTeacherIsNotPresent() {
         AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest();
         adminUpdateRequest.setUsername("test_user");
@@ -176,6 +183,7 @@ public class AdminServiceTests {
     }
 
     @Test
+    @DisplayName("Update admin successfully.")
     public void updateAdminSuccessful() throws Exception {
         AdminUpdateRequest adminUpdateRequest = new AdminUpdateRequest();
         adminUpdateRequest.setUsername("test_user");
