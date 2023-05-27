@@ -28,20 +28,17 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
-    private final UserService userService;
     private final EmailService emailService;
 
     public ProjectService(
             ProjectRepository projectRepository,
             StudentRepository studentRepository,
             CourseRepository courseRepository,
-            UserService userService,
             EmailService emailService
     ) {
         this.projectRepository = projectRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
-        this.userService = userService;
         this.emailService = emailService;
     }
 
@@ -135,6 +132,7 @@ public class ProjectService {
 
         project.setFeedback(gradeFeedback.getStudentFeedback());
         project.setGrade(gradeFeedback.getStudentGrade());
+
 
         emailService.sendMail(project);
 
@@ -372,6 +370,8 @@ public class ProjectService {
         project = optionalProject.get();
 
         for (Project activeProject : student.getProjects()) {
+            System.out.println(activeProject.getUniqueId());
+            System.out.println(uniqueId);
             if (activeProject.getUniqueId().equals(uniqueId)) {
                 throw new StudentAssignedProjectException();
             }
