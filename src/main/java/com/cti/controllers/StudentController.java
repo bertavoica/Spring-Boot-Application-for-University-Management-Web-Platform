@@ -1,10 +1,12 @@
 package com.cti.controllers;
 
 
+import com.cti.exception.UsernameNotExistsException;
 import com.cti.models.*;
 import com.cti.payload.request.StudentAddRequest;
 import com.cti.payload.request.StudentUpdateRequest;
 import com.cti.repository.*;
+import com.cti.service.StudentService;
 import com.cti.service.UserService;
 import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,35 +45,20 @@ public class StudentController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StudentService studentService;
+
     @GetMapping(value = "/course")
     @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> getStudentCourses(@RequestParam(name = "username", defaultValue = "", required = false) String username,
                                                Principal principal) {
 
-        List<Course> courseList;
-        Optional<Student> optionalStudent;
-        Student student;
-        Optional<Course> optionalCourse;
-
-        if (username.equals(""))
-            return ResponseEntity.ok(studentRepository.findAll());
-
-        optionalStudent = studentRepository.findByUsername(username);
-        if (!optionalStudent.isPresent())
+        try {
+            List<Object> courses = this.studentService.getStudentCourses(username);
+            return ResponseEntity.ok(courses);
+        } catch (UsernameNotExistsException e) {
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UsernameNotExist").get(userService.getPreferredLanguage(principal)));
-
-        student = optionalStudent.get();
-        courseList = new ArrayList<>();
-
-        if (student.getCoursesIds() == null)
-            return ResponseEntity.ok(courseList);
-
-        for (String courseId : student.getCoursesIds()) {
-            optionalCourse = courseRepository.findByUniqueId(courseId);
-            optionalCourse.ifPresent(courseList::add);
         }
-
-        return ResponseEntity.ok(courseList);
     }
 
     @PutMapping(value = "/course")
