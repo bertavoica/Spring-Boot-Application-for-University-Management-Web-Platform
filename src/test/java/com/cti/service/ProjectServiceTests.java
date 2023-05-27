@@ -1,10 +1,14 @@
 package com.cti.service;
 
 import com.cti.exception.*;
+import com.cti.models.Course;
 import com.cti.models.Project;
 import com.cti.models.Student;
 import com.cti.payload.request.AssignmentUploadRequest;
 import com.cti.payload.request.GradeFeedbackAssignmentRequest;
+import com.cti.payload.request.ProjectAddRequest;
+import com.cti.payload.request.ProjectUpdateRequest;
+import com.cti.repository.CourseRepository;
 import com.cti.repository.ProjectRepository;
 import com.cti.repository.StudentRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +22,8 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +45,9 @@ public class ProjectServiceTests {
 
     @Mock
     private StudentRepository studentRepository;
+
+    @Mock
+    private CourseRepository courseRepository;
 
     @Mock
     private EmailService emailService;
@@ -258,24 +267,104 @@ public class ProjectServiceTests {
     public void assignProjectToUserTest() throws ProjectNotFoundUserException, StudentNotExistsException, StudentAssignedProjectException {
         Project mockProject = new Project();
         mockProject.setAssignee(USERNAME);
-        mockProject.setUniqueId("1");
+        mockProject.setUniqueId("2");
         mockProject.setProjectName("test");
         mockProject.setGrade(8.9);
         mockProject.setFeedback("test");
 
+        Project activeProject = new Project();
+        activeProject.setUniqueId("1");
+
         Student mockStudent = new Student();
         mockStudent.setUsername(USERNAME);
-        mockStudent.setCoursesIds(List.of(UNIQUE_ID));
-        mockStudent.setProjects(List.of(mockProject));
+        mockStudent.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
+        mockStudent.setProjects(new ArrayList<>(Collections.singleton(activeProject)));
 
         when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
 
-        when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
+        when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
 
         this.projectService.assignProjectToUser(USERNAME, "2");
 
         verify(this.studentRepository).save(mockStudent);
     }
 
+    @Test
+    @DisplayName("Assign project to group successfully.")
+    public void assignProjectToGroupTest() throws ProjectNotFoundException, NoStudentsInGroupException, StudentsGroupAlreadyAssignedException {
+        Project mockProject = new Project();
+        mockProject.setAssignee(USERNAME);
+        mockProject.setUniqueId("2");
+        mockProject.setProjectName("test");
+        mockProject.setGrade(8.9);
+        mockProject.setFeedback("test");
+
+        Project activeProject = new Project();
+        activeProject.setUniqueId("1");
+
+        Student mockStudent = new Student();
+        mockStudent.setUsername(USERNAME);
+        mockStudent.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
+        mockStudent.setProjects(new ArrayList<>(Collections.singleton(activeProject)));
+
+        when(this.studentRepository.findByGroup(USERNAME)).thenReturn(List.of(mockStudent));
+
+        when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
+
+        this.projectService.assignProjectToGroup(USERNAME, "2");
+
+        verify(this.studentRepository).save(mockStudent);
+    }
+
+    @Test
+    @DisplayName("Add project template successfully.")
+    public void addProjectTemplateTest() throws CourseNotFoundException {
+        ProjectAddRequest projectAddRequest = new ProjectAddRequest();
+        projectAddRequest.setCourseUniqueId(UNIQUE_ID);
+        projectAddRequest.setOwner(USERNAME);
+        projectAddRequest.setInputDate("2023-05-06");
+        projectAddRequest.setInputTime("23:59");
+
+        Course mockCourse = new Course();
+        mockCourse.setUniqueId(UNIQUE_ID);
+
+        when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
+
+//        Project project = new Project(projectAddRequest);
+//        project.setCourse(mockCourse);
+//        project.setOwner(USERNAME);
+//
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        project.setDeadline(LocalDateTime.parse("2023-05-06 23:59", formatter));
+
+        this.projectService.addProjectTemplate(projectAddRequest);
+
+        verify(this.projectRepository).save(any(Project.class));
+    }
+
+    @Test
+    @DisplayName("Update a project successfully.")
+    public void updateProjectTest() throws ProjectNotFoundException, CourseNotFoundException {
+        ProjectUpdateRequest projectUpdateRequest = new ProjectUpdateRequest();
+        projectUpdateRequest.setCourseUniqueId(UNIQUE_ID);
+        projectUpdateRequest.setUniqueId(UNIQUE_ID);
+
+        Project mockProject = new Project();
+        mockProject.setAssignee(USERNAME);
+        mockProject.setUniqueId(UNIQUE_ID);
+        mockProject.setProjectName("test");
+        mockProject.setDescription("test");
+
+        when(this.projectRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockProject));
+
+        Course mockCourse = new Course();
+        mockCourse.setUniqueId(UNIQUE_ID);
+
+        when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
+
+        this.projectService.updateProject(projectUpdateRequest);
+
+        verify(this.projectRepository).save(mockProject);
+    }
 
 }

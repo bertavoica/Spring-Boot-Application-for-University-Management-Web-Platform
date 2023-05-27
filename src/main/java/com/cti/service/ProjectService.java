@@ -370,8 +370,6 @@ public class ProjectService {
         project = optionalProject.get();
 
         for (Project activeProject : student.getProjects()) {
-            System.out.println(activeProject.getUniqueId());
-            System.out.println(uniqueId);
             if (activeProject.getUniqueId().equals(uniqueId)) {
                 throw new StudentAssignedProjectException();
             }
