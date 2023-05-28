@@ -27,4 +27,7 @@ public interface ApplicationConstants {
     String USER_EXISTS = "UserExist";
     String TEACHER_EXIST = "TeacherExist";
     String ROLE_NOT_FOUND = "RoleNotFound";
+    String TITLE_NOT_EXISTS = "TitleNotExists";
+    String TEACHER_NOT_EXISTS = "TeacherNotExists";
+    String STUDENT_EXISTS = "StudentExists";
 }
