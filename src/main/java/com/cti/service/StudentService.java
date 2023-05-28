@@ -126,8 +126,9 @@ public class StudentService {
     }
 
     public List<Object> getStudentDetails(String username) {
-        if (username.equals(""))
+        if (username.equals("")) {
             return Collections.singletonList(studentRepository.findAll());
+        }
         else
             return Collections.singletonList(studentRepository.findByUsernameContainingIgnoreCase(username));
     }
@@ -165,6 +166,7 @@ public class StudentService {
 
         optionalStudent = studentRepository.findByUsername(studentUpdateRequest.getUsername());
         optionalUser = userRepository.findByUsername(studentUpdateRequest.getUsername());
+
         if (!optionalStudent.isPresent() || !optionalUser.isPresent()) {
             throw new StudentNotExistsException();
         }
@@ -192,6 +194,7 @@ public class StudentService {
             role = roleRepository.findByName(ERole.ROLE_TEACHER)
                     .orElseThrow(RoleNotFoundException::new);
             outputRoles.add(role);
+
             user.setRoles(outputRoles);
             teacher.setUsername(student.getUsername());
             teacher.setEmailAddress(student.getEmailAddress());

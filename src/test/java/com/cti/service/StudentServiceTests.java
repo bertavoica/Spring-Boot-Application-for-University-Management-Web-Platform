@@ -1,10 +1,10 @@
 package com.cti.service;
 
-import com.cti.exception.UsernameNotExistsException;
-import com.cti.models.Course;
-import com.cti.models.Student;
-import com.cti.repository.CourseRepository;
-import com.cti.repository.StudentRepository;
+import com.cti.exception.*;
+import com.cti.models.*;
+import com.cti.payload.request.StudentAddRequest;
+import com.cti.payload.request.StudentUpdateRequest;
+import com.cti.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,16 +12,18 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import javax.management.relation.RoleNotFoundException;
+import java.util.*;
 
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.*;
+import static org.testng.Assert.assertThrows;
 import static org.testng.AssertJUnit.assertEquals;
 
 @SpringBootTest
@@ -35,7 +37,19 @@ public class StudentServiceTests {
     private StudentRepository studentRepository;
 
     @Mock
+    private UserRepository userRepository;
+
+    @Mock
     private CourseRepository courseRepository;
+
+    @Mock
+    private RoleRepository roleRepository;
+
+    @Mock
+    private TeacherRepository teacherRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     public static final String USERNAME = "username";
 
@@ -65,5 +79,187 @@ public class StudentServiceTests {
         List<Object> result = this.studentService.getStudentCourses(USERNAME);
 
         assertEquals(result.size(), 1);
+    }
+
+    @Test
+    @DisplayName("Enroll a student successfully.")
+    public void enrollStudentTest() throws UsernameNotExistsException, StudentAlreadyEnrolledException, CourseNotFoundException, StudentNotExistsException {
+        Student student = new Student();
+        student.setUsername(USERNAME);
+        student.setCoursesIds(new ArrayList<>(Collections.singleton("2")));
+
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+
+        Course mockCourse = new Course();
+        mockCourse.setUniqueId(UNIQUE_ID);
+        mockCourse.setResponsible(new ArrayList<>(Collections.singletonList(USERNAME)));
+
+        Optional<Course> optionalMockCourse = Optional.of(mockCourse);
+        when(courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(optionalMockCourse);
+
+        this.studentService.enrollStudent(USERNAME, UNIQUE_ID);
+
+        verify(this.studentRepository).save(student);
+    }
+
+    @Test
+    @DisplayName("Remove a student from course successfully.")
+    public void removeStudentFromCourseTest() throws UsernameNotExistsException, StudentsAlreadyRegisteredException, StudentNotEnrolledException {
+        Student student = new Student();
+        student.setUsername(USERNAME);
+        student.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
+
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+
+        this.studentService.removeStudentFromCourse(USERNAME, UNIQUE_ID);
+
+        verify(this.studentRepository).save(student);
+    }
+
+    @Test
+    @DisplayName("Get student details successfully.")
+    public void getStudentDetailsTest() {
+        Student student_1 = new Student();
+        student_1.setUsername("test_1");
+
+        List<Object> students = List.of(student_1);
+
+        List<Object> result = this.studentService.getStudentDetails("test_1");
+
+        assertEquals(result.size(), students.size());
+    }
+
+    @Test
+    @DisplayName("Add student successfully.")
+    public void addStudentWithNonExistingUsernameTest() throws UserExistException {
+        StudentAddRequest request = new StudentAddRequest();
+        request.setUsername("test");
+        request.setPassword("pass");
+        request.setEmailAddress("email");
+
+        when(userRepository.findByUsername(request.getUsername())).thenReturn(Optional.empty());
+
+        List<Student> result = studentService.addStudent(request);
+
+        verify(userRepository, times(1)).save(any(User.class));
+        verify(studentRepository, times(1)).save(any(Student.class));
+        verify(studentRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Add student with existing username successfully.")
+    public void addStudentWithExistingUsernameTest() {
+        StudentAddRequest request = new StudentAddRequest();
+        request.setUsername("test");
+        request.setPassword("pass");
+        request.setEmailAddress("email");
+
+        when(userRepository.findByUsername(request.getUsername())).thenReturn(Optional.of(new User()));
+
+        assertThrows(UserExistException.class, () -> studentService.addStudent(request));
+    }
+
+    @Test
+    @DisplayName("Update student when role is Teacher successfully.")
+    public void updateStudentWithRoleTeacherTest() throws TeacherExistException, RoleNotFoundException, StudentNotExistsException {
+        StudentUpdateRequest request = new StudentUpdateRequest();
+        request.setUsername(USERNAME);
+        request.setRole("Teacher");
+        request.setSpecialization("specialization");
+        request.setCycle("cycle");
+        request.setGroup("group");
+
+        Student student = new Student();
+        student.setUsername(USERNAME);
+        student.setEmailAddress("test");
+
+        User user = new User();
+        user.setUsername(USERNAME);
+
+        Teacher teacher = new Teacher();
+        Role role = new Role();
+
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+        Mockito.when(this.userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
+        Mockito.when(this.teacherRepository.findByUsername(USERNAME)).thenReturn(Optional.empty());
+        Mockito.when(this.roleRepository.findByName(ERole.ROLE_TEACHER)).thenReturn(Optional.of(role));
+
+        Mockito.when(this.teacherRepository.save(Mockito.any(Teacher.class))).thenReturn(teacher);
+
+        this.studentService.updateStudent(request);
+
+        verify(teacherRepository, times(1)).save(any(Teacher.class));
+        verify(studentRepository, times(1)).delete(student);
+        verify(userRepository, times(1)).save(user);
+        verify(studentRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Update student when role is Admin successfully.")
+    public void updateStudentWithRoleAdminTest() throws TeacherExistException, RoleNotFoundException, StudentNotExistsException {
+        StudentUpdateRequest request = new StudentUpdateRequest();
+        request.setUsername(USERNAME);
+        request.setRole("Admin");
+        request.setSpecialization("specialization");
+        request.setCycle("cycle");
+        request.setGroup("group");
+
+        Student student = new Student();
+        student.setUsername(USERNAME);
+        student.setEmailAddress("test");
+
+        User user = new User();
+        user.setUsername(USERNAME);
+
+        Role role = new Role();
+
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+        Mockito.when(this.userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
+        Mockito.when(this.teacherRepository.findByUsername(USERNAME)).thenReturn(Optional.empty());
+        Mockito.when(this.roleRepository.findByName(ERole.ROLE_ADMIN)).thenReturn(Optional.of(role));
+
+        this.studentService.updateStudent(request);
+
+        verify(studentRepository, times(1)).delete(student);
+        verify(userRepository, times(1)).save(user);
+        verify(studentRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Update student when role is Student successfully.")
+    public void updateStudentWithRoleStudentTest() throws TeacherExistException, RoleNotFoundException, StudentNotExistsException {
+        StudentUpdateRequest request = new StudentUpdateRequest();
+        request.setUsername(USERNAME);
+        request.setRole("Student");
+        request.setSpecialization("specialization");
+        request.setCycle("cycle");
+        request.setGroup("group");
+
+        Student student = new Student();
+        student.setUsername(USERNAME);
+        student.setEmailAddress("test");
+
+        User user = new User();
+        user.setUsername(USERNAME);
+
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+        Mockito.when(this.userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
+
+        this.studentService.updateStudent(request);
+
+        verify(studentRepository, times(1)).save(student);
+        verify(studentRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Delete a student successfully.")
+    public void deleteStudentTest() {
+        List<Student> result = this.studentService.deleteStudent(USERNAME);
+
+        verify(userRepository, times(1)).deleteByUsername(USERNAME);
+        verify(studentRepository, times(1)).deleteByUsername(USERNAME);
+        verify(studentRepository, times(1)).findAll();
+
+        Assert.assertNotNull(result);
     }
 }
