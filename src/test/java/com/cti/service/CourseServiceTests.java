@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -44,7 +45,7 @@ public class CourseServiceTests {
     public static final String USERNAME = "username";
     public static final String UNIQUE_ID = "unique_id";
 
-    @BeforeMethod
+    @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }

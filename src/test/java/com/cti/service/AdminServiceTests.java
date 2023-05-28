@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -50,7 +51,7 @@ public class AdminServiceTests {
     @InjectMocks
     private AdminService adminService;
 
-    @BeforeMethod
+    @BeforeClass
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

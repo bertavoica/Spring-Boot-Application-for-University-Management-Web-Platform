@@ -8,6 +8,7 @@ import com.cti.payload.request.StudentUpdateRequest;
 import com.cti.repository.*;
 import com.cti.service.StudentService;
 import com.cti.service.UserService;
+import com.cti.utils.ApplicationConstants;
 import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,12 +53,11 @@ public class StudentController {
     @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> getStudentCourses(@RequestParam(name = "username", defaultValue = "", required = false) String username,
                                                Principal principal) {
-
         try {
             List<Object> courses = this.studentService.getStudentCourses(username);
             return ResponseEntity.ok(courses);
         } catch (UsernameNotExistsException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UsernameNotExist").get(userService.getPreferredLanguage(principal)));
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
         }
     }
 

@@ -11,23 +11,30 @@ import com.cti.payload.request.ProjectUpdateRequest;
 import com.cti.repository.CourseRepository;
 import com.cti.repository.ProjectRepository;
 import com.cti.repository.StudentRepository;
+//import org.junit.jupiter.api.DisplayName;
+import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.any;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -54,10 +61,15 @@ public class ProjectServiceTests {
 
     public static final String UNIQUE_ID = "1";
 
-    @BeforeMethod
+    @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
+
+//    @AfterClass
+//    public void cleanup() {
+//        Mockito.reset(studentRepository, courseRepository, projectRepository);
+//    }
 
     @Test
     @DisplayName("Download a project successfully.")
@@ -78,7 +90,7 @@ public class ProjectServiceTests {
 
         student.setProjects(List.of(project1, project2));
 
-        when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(student));
 
         File result = projectService.downloadProject(USERNAME, UNIQUE_ID);
 
@@ -113,11 +125,11 @@ public class ProjectServiceTests {
 
         mockStudent.setProjects(List.of(project1, project2));
 
-        when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
 
         this.projectService.uploadProject(assignmentUploadRequest);
 
-        verify(studentRepository, times(1)).save(mockStudent);
+        Mockito.verify(studentRepository, Mockito.times(1)).save(mockStudent);
     }
 
     @Test
@@ -131,9 +143,9 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(List.of(UNIQUE_ID));
         mockStudent.setProjects(List.of(project));
 
-        when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
 
-        when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
+        Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
 
         List<Project> projects = this.projectService.getAllAssignedProjects(USERNAME);
 
@@ -158,13 +170,13 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(List.of(UNIQUE_ID));
         mockStudent.setProjects(List.of(project));
 
-        when(this.studentRepository.findByUsername(gradeFeedbackAssignmentRequest.getStudentName())).thenReturn(Optional.of(mockStudent));
+        Mockito.when(this.studentRepository.findByUsername(gradeFeedbackAssignmentRequest.getStudentName())).thenReturn(Optional.of(mockStudent));
 
         projectService.reviewProject(gradeFeedbackAssignmentRequest);
 
-        verify(emailService).sendMail(project);
+        Mockito.verify(emailService).sendMail(project);
 
-        verify(this.studentRepository).save(mockStudent);
+        Mockito.verify(this.studentRepository).save(mockStudent);
     }
 
 
@@ -180,11 +192,11 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
         mockStudent.setProjects(new ArrayList<>(Collections.singleton(project)));
 
-        when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
 
         projectService.deleteAssignment(USERNAME, "1");
 
-        verify(this.studentRepository).save(mockStudent);
+        Mockito.verify(this.studentRepository).save(mockStudent);
     }
 
     @Test
@@ -202,9 +214,9 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(List.of(UNIQUE_ID));
         mockStudent.setProjects(List.of(mockProject));
 
-        when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
 
-        when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
+        Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
 
         String result = projectService.getReviewedStatistics("1");
 
@@ -226,9 +238,9 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(List.of(UNIQUE_ID));
         mockStudent.setProjects(List.of(mockProject));
 
-        when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
 
-        when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
+        Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
 
         String result = projectService.getDeadlineStatistics("1");
 
@@ -250,9 +262,9 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(List.of(UNIQUE_ID));
         mockStudent.setProjects(List.of(mockProject));
 
-        when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId("1")).thenReturn(Optional.of(mockProject));
 
-        when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
+        Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(mockStudent));
 
         String result = projectService.getGradesStatistics("1");
 
@@ -261,7 +273,7 @@ public class ProjectServiceTests {
 
 
     @Test
-    @DisplayName("Assign project to user successfully.")
+//    @DisplayName("Assign project to user successfully.")
     public void assignProjectToUserTest() throws ProjectNotFoundUserException, StudentNotExistsException, StudentAssignedProjectException {
         Project mockProject = new Project();
         mockProject.setAssignee(USERNAME);
@@ -278,17 +290,17 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
         mockStudent.setProjects(new ArrayList<>(Collections.singleton(activeProject)));
 
-        when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
+        Mockito.when(this.studentRepository.findByUsername(USERNAME)).thenReturn(Optional.of(mockStudent));
 
-        when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
 
         this.projectService.assignProjectToUser(USERNAME, "2");
 
-        verify(this.studentRepository).save(mockStudent);
+        Mockito.verify(this.studentRepository).save(mockStudent);
     }
 
     @Test
-    @DisplayName("Assign project to group successfully.")
+//    @DisplayName("Assign project to group successfully.")
     public void assignProjectToGroupTest() throws ProjectNotFoundException, NoStudentsInGroupException, StudentsGroupAlreadyAssignedException {
         Project mockProject = new Project();
         mockProject.setAssignee(USERNAME);
@@ -305,13 +317,14 @@ public class ProjectServiceTests {
         mockStudent.setCoursesIds(new ArrayList<>(Collections.singleton(UNIQUE_ID)));
         mockStudent.setProjects(new ArrayList<>(Collections.singleton(activeProject)));
 
-        when(this.studentRepository.findByGroup(USERNAME)).thenReturn(List.of(mockStudent));
+        Mockito.when(this.studentRepository.findByGroup(USERNAME)).thenReturn(List.of(mockStudent));
 
-        when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId("2")).thenReturn(Optional.of(mockProject));
 
         this.projectService.assignProjectToGroup(USERNAME, "2");
+//        assertDoesNotThrow(() -> this.projectService.assignProjectToGroup(USERNAME, "2"));
 
-        verify(this.studentRepository).save(mockStudent);
+        Mockito.verify(this.studentRepository).save(mockStudent);
     }
 
     @Test
@@ -326,18 +339,18 @@ public class ProjectServiceTests {
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
 
-        when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
+        Mockito.when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
 
-//        Project project = new Project(projectAddRequest);
-//        project.setCourse(mockCourse);
-//        project.setOwner(USERNAME);
-//
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        project.setDeadline(LocalDateTime.parse("2023-05-06 23:59", formatter));
+        Project project = new Project(projectAddRequest);
+        project.setCourse(mockCourse);
+        project.setOwner(USERNAME);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        project.setDeadline(LocalDateTime.parse("2023-05-06 23:59", formatter));
 
         this.projectService.addProjectTemplate(projectAddRequest);
 
-        verify(this.projectRepository).save(any(Project.class));
+        Mockito.verify(this.projectRepository).save(any(Project.class));
     }
 
     @Test
@@ -353,16 +366,16 @@ public class ProjectServiceTests {
         mockProject.setProjectName("test");
         mockProject.setDescription("test");
 
-        when(this.projectRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockProject));
+        Mockito.when(this.projectRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockProject));
 
         Course mockCourse = new Course();
         mockCourse.setUniqueId(UNIQUE_ID);
 
-        when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
+        Mockito.when(this.courseRepository.findByUniqueId(UNIQUE_ID)).thenReturn(Optional.of(mockCourse));
 
         this.projectService.updateProject(projectUpdateRequest);
 
-        verify(this.projectRepository).save(mockProject);
+        Mockito.verify(this.projectRepository).save(mockProject);
     }
 
 }
