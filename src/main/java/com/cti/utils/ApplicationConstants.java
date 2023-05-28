@@ -24,4 +24,7 @@ public interface ApplicationConstants {
     String STUDENTS_GROUP_ASSIGNED = "StudentsGroupAssigned";
     String PROJECT_TEMPLATE_ADDED = "ProjectTemplateAdded";
     String PROJECT_TEMPLATE_UPDATED = "ProjectTemplateUpdated";
+    String USER_EXISTS = "UserExist";
+    String TEACHER_EXIST = "TeacherExist";
+    String ROLE_NOT_FOUND = "RoleNotFound";
 }

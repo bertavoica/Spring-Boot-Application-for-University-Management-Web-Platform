@@ -33,7 +33,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
@@ -65,11 +64,6 @@ public class ProjectServiceTests {
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
-
-//    @AfterClass
-//    public void cleanup() {
-//        Mockito.reset(studentRepository, courseRepository, projectRepository);
-//    }
 
     @Test
     @DisplayName("Download a project successfully.")

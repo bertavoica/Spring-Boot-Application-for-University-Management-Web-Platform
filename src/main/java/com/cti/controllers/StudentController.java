@@ -1,7 +1,7 @@
 package com.cti.controllers;
 
 
-import com.cti.exception.UsernameNotExistsException;
+import com.cti.exception.*;
 import com.cti.models.*;
 import com.cti.payload.request.StudentAddRequest;
 import com.cti.payload.request.StudentUpdateRequest;
@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.*;
@@ -27,21 +28,6 @@ public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
-
-    @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
 
     @Autowired
     private UserService userService;
@@ -66,35 +52,18 @@ public class StudentController {
     public ResponseEntity<?> enrollStudent(@RequestParam(name = "username", defaultValue = "", required = false) String username,
                                            @RequestParam(name = "courseId", defaultValue = "", required = false) String courseId,
                                            Principal principal) {
-
-        Optional<Student> optionalStudent;
-        Student student;
-        Optional<Course> optionalCourse;
-
-
-        if (username.equals(""))
+        try {
+            this.studentService.enrollStudent(username, courseId);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.STUDENT_ENROLLED).get(userService.getPreferredLanguage(principal)));
+        } catch (StudentNotExistsException e) {
             return ResponseEntity.ok(studentRepository.findAll());
-
-        optionalStudent = studentRepository.findByUsername(username);
-        if (!optionalStudent.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UsernameNotExist").get(userService.getPreferredLanguage(principal)));
-
-        student = optionalStudent.get();
-
-        optionalCourse = courseRepository.findByUniqueId(courseId);
-        if (!optionalCourse.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("CourseNotFound").get(userService.getPreferredLanguage(principal)));
-
-        if (student.getCoursesIds() == null)
-            student.setCoursesIds(new ArrayList<>());
-
-        if (student.getCoursesIds().contains(courseId))
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("StudentAlreadyEnrolled").get(userService.getPreferredLanguage(principal)));
-
-        student.getCoursesIds().add(courseId);
-        studentRepository.save(student);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("StudentEnrolled").get(userService.getPreferredLanguage(principal)));
+        } catch (UsernameNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
+        } catch (CourseNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.COURSE_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
+        } catch (StudentAlreadyEnrolledException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENT_ALREADY_ENROLLED).get(userService.getPreferredLanguage(principal)));
+        }
     }
 
     @DeleteMapping(value = "/course")
@@ -102,138 +71,54 @@ public class StudentController {
     public ResponseEntity<?> removeStudentFromCourse(@RequestParam(name = "username", defaultValue = "", required = false) String username,
                                                      @RequestParam(name = "courseId", defaultValue = "", required = false) String courseId,
                                                      Principal principal) {
+        try {
+            this.studentService.removeStudentFromCourse(username, courseId);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.STUDENT_REMOVED_FROM_COURSE).get(userService.getPreferredLanguage(principal)));
 
-        Optional<Student> optionalStudent;
-        Student student;
-
-        if (username.equals(""))
+        } catch (UsernameNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
+        } catch (StudentsAlreadyRegisteredException e) {
             return ResponseEntity.ok(studentRepository.findAll());
-
-        optionalStudent = studentRepository.findByUsername(username);
-        if (!optionalStudent.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UsernameNotExist").get(userService.getPreferredLanguage(principal)));
-
-        student = optionalStudent.get();
-
-
-        if (student.getCoursesIds() == null)
-            student.setCoursesIds(new ArrayList<>());
-
-        if (!student.getCoursesIds().contains(courseId))
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("StudentNotEnrolled").get(userService.getPreferredLanguage(principal)));
-
-        student.getCoursesIds().remove(courseId);
-        studentRepository.save(student);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("StudentRemovedFromCourse").get(userService.getPreferredLanguage(principal)));
+        } catch (StudentNotEnrolledException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENT_ENROLLED).get(userService.getPreferredLanguage(principal)));
+        }
     }
 
     @GetMapping()
     @PreAuthorize("hasRole('STUDENT') or hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> getStudentDetails(@RequestParam(name = "username", defaultValue = "", required = false) String username) {
-
-        if (username.equals(""))
-            return ResponseEntity.ok(studentRepository.findAll());
-        else
-            return ResponseEntity.ok(studentRepository.findByUsernameContainingIgnoreCase(username));
+        return ResponseEntity.ok(this.studentService.getStudentDetails(username));
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> addStudent(@Valid @RequestBody StudentAddRequest studentAddRequest,
                                         Principal principal) {
-        Student student;
-        User user;
-
-        if (userRepository.findByUsername(studentAddRequest.getUsername()).isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("UserExist").get(userService.getPreferredLanguage(principal)));
-
-        user = new User();
-        user.setUsername(studentAddRequest.getUsername());
-        user.setEmail(studentAddRequest.getEmailAddress());
-        user.getRoles().add(new Role(ERole.ROLE_STUDENT));
-        user.setPassword(encoder.encode(studentAddRequest.getPassword()));
-        userRepository.save(user);
-
-        student = new Student(studentAddRequest);
-        studentRepository.save(student);
-
-        return ResponseEntity.ok(studentRepository.findAll());
+        try {
+            return ResponseEntity.ok(this.studentService.addStudent(studentAddRequest));
+        } catch (UserExistException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USER_EXISTS).get(userService.getPreferredLanguage(principal)));
+        }
     }
 
     @PutMapping()
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateStudent(@Valid @RequestBody StudentUpdateRequest studentUpdateRequest,
                                            Principal principal) {
-
-        Optional<Student> optionalStudent;
-        Student student;
-        Optional<User> optionalUser;
-        User user;
-        Set<Role> outputRoles;
-        Optional<Teacher> optionalTeacher;
-        Teacher teacher;
-        Role role;
-
-        optionalStudent = studentRepository.findByUsername(studentUpdateRequest.getUsername());
-        optionalUser = userRepository.findByUsername(studentUpdateRequest.getUsername());
-        if (!optionalStudent.isPresent() || !optionalUser.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("StudentNotExists").get(userService.getPreferredLanguage(principal)));
-
-        student = optionalStudent.get();
-        if (studentUpdateRequest.getSpecialization() != null && !studentUpdateRequest.getSpecialization().equals(""))
-            student.setSpecialization(studentUpdateRequest.getSpecialization());
-
-        if (studentUpdateRequest.getGroup() != null && !studentUpdateRequest.getGroup().equals(""))
-            student.setGroup(studentUpdateRequest.getGroup());
-
-        if (studentUpdateRequest.getCycle() != null && !studentUpdateRequest.getCycle().equals(""))
-            student.setEducationCycle(studentUpdateRequest.getCycle());
-
-        user = optionalUser.get();
-        outputRoles = new HashSet<>();
-        if (studentUpdateRequest.getRole().equals("Teacher")) {
-            optionalTeacher = teacherRepository.findByUsername(studentUpdateRequest.getUsername());
-            if (optionalTeacher.isPresent())
-                return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherExist").get(userService.getPreferredLanguage(principal)) + " " + studentUpdateRequest.getUsername());
-
-            teacher = new Teacher();
-
-            role = roleRepository.findByName(ERole.ROLE_TEACHER)
-                    .orElseThrow(() -> new RuntimeException(Utils.languageDictionary.get("RoleNotFound").get(userService.getPreferredLanguage(principal))));
-            outputRoles.add(role);
-            user.setRoles(outputRoles);
-            teacher.setUsername(student.getUsername());
-            teacher.setEmailAddress(student.getEmailAddress());
-            teacherRepository.save(teacher);
-            studentRepository.delete(student);
-
-            userRepository.save(user);
-
-        } else if (studentUpdateRequest.getRole().equals("Admin")) {
-            role = roleRepository.findByName(ERole.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException(Utils.languageDictionary.get("RoleNotFound").get(userService.getPreferredLanguage(principal))));
-            outputRoles.add(role);
-            user.setRoles(outputRoles);
-            studentRepository.delete(student);
-            userRepository.save(user);
-
+        try {
+            return ResponseEntity.ok(this.studentService.updateStudent(studentUpdateRequest));
+        } catch (TeacherExistException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_EXIST).get(userService.getPreferredLanguage(principal)) + " " + studentUpdateRequest.getUsername());
+        } catch (RoleNotFoundException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.ROLE_NOT_FOUND).get(userService.getPreferredLanguage(principal)));
+        } catch (StudentNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENT_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
         }
-
-        if (studentUpdateRequest.getRole().equals("Student")) {
-            studentRepository.save(student);
-        }
-
-        return ResponseEntity.ok(studentRepository.findAll());
     }
 
     @DeleteMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteStudent(@RequestParam(name = "username", defaultValue = "") String username) {
-
-        userRepository.deleteByUsername(username);
-        studentRepository.deleteByUsername(username);
-
-        return ResponseEntity.ok(studentRepository.findAll());
+        return ResponseEntity.ok(this.studentService.deleteStudent(username));
     }
 }
