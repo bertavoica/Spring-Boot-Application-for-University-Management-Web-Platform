@@ -30,4 +30,6 @@ public interface ApplicationConstants {
     String TITLE_NOT_EXISTS = "TitleNotExists";
     String TEACHER_NOT_EXISTS = "TeacherNotExists";
     String STUDENT_EXISTS = "StudentExists";
+    String TITLE_ADDED = "TitleAdded";
+    String TITLE_EXISTS = "TitleExists";
 }

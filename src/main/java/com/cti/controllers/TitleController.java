@@ -1,11 +1,14 @@
 package com.cti.controllers;
 
+import com.cti.exception.TitleExistsException;
 import com.cti.models.Teacher;
 import com.cti.models.Title;
 import com.cti.payload.request.TitleAddRequest;
 import com.cti.repository.TeacherRepository;
 import com.cti.repository.TitleRepository;
+import com.cti.service.TitleService;
 import com.cti.service.UserService;
+import com.cti.utils.ApplicationConstants;
 import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +23,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/title-controller")
 public class TitleController {
-
     @Autowired
-    private TitleRepository titleRepository;
-
-    @Autowired
-    private TeacherRepository teacherRepository;
+    private TitleService titleService;
 
     @Autowired
     private UserService userService;
@@ -34,46 +33,23 @@ public class TitleController {
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> getAllTitles() {
 
-        return ResponseEntity.ok(titleRepository.findAll());
+        return ResponseEntity.ok(this.titleService.getAllTitles());
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('TEACHER') or hasRole('ADMIN')")
     public ResponseEntity<?> addTitle(@Valid @RequestBody TitleAddRequest titleAddRequest,
                                       Principal principal) {
-        Title title;
-
-        if (titleRepository.findByName(titleAddRequest.getName()).isPresent()) {
-            System.out.println("test");
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TitleExists").get(userService.getPreferredLanguage(principal)) + " " + titleAddRequest.getName());
+        try {
+            return ResponseEntity.ok(this.titleService.addTitle(titleAddRequest));
+        } catch (TitleExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TITLE_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + titleAddRequest.getName());
         }
-
-
-        System.out.println("bhdsjd");
-        title = new Title();
-        title.setName(titleAddRequest.getName());
-        titleRepository.save(title);
-
-        System.out.println("dsbhg");
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("TitleAdded").get(userService.getPreferredLanguage(principal)) + " " + titleAddRequest.getName());
     }
 
     @DeleteMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteTitle(@RequestParam(name = "name", defaultValue = "") String name) {
-
-        List<Teacher> teachers;
-
-        // Set as null as teacher titles that have this name
-        teachers = teacherRepository.findByTitle(name);
-        for (Teacher teacher : teachers) {
-            teacher.setTitle(null);
-            teacherRepository.save(teacher);
-        }
-
-        titleRepository.deleteByName(name);
-
-        return ResponseEntity.ok(titleRepository.findAll());
+        return ResponseEntity.ok(this.titleService.deleteTitle(name));
     }
 }
