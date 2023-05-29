@@ -2,8 +2,8 @@ package com.cti.service;
 
 import com.cti.exception.UserNoLanguageException;
 import com.cti.exception.UserNotFoundException;
-import com.cti.models.Title;
-import com.cti.models.User;
+import com.cti.exception.UsernameNotExistsException;
+import com.cti.models.*;
 import com.cti.repository.StudentRepository;
 import com.cti.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Optional;
+import java.security.Principal;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -105,5 +105,176 @@ public class UserServiceTests {
         Mockito.verify(this.userRepository, Mockito.times(1)).save(user);
 
         assertEquals("english", user.getLanguagePreference());
+    }
+
+    @Test
+    @DisplayName("Update language preference successfully.")
+    public void updateLanguagePreferenceWhenUserHasNoUsernameTest() throws UserNotFoundException {
+        User user = new User();
+        user.setUsername("test_1");
+        user.setLanguagePreference("romanian");
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> this.userService.updateLanguagePreference("test", "english"));
+    }
+
+    @Test
+    @DisplayName("Update user rights when user is student.")
+    public void updateUserRightsWhenUserIsStudent() throws UsernameNotExistsException {
+        User user = new User();
+        user.setUsername("test");
+        user.setLanguagePreference("romanian");
+
+        Role roleUser = new Role();
+        roleUser.setName(ERole.ROLE_STUDENT);
+
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(roleUser);
+        user.setRoles(roleSet);
+
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+        Mockito.doNothing().when(this.studentRepository).deleteByUsername("test");
+
+        User result = this.userService.updateUserRights(ERole.ROLE_TEACHER, "test");
+
+        Mockito.verify(this.userRepository, Mockito.times(1)).save(user);
+
+        assertEquals("test", result.getUsername());
+        assertEquals(1, result.getRoles().size());
+        assertEquals(roleSet, result.getRoles());
+        assertEquals(ERole.ROLE_TEACHER, result.getRoles().iterator().next().getName());
+    }
+
+    @Test
+    @DisplayName("Update user rights when user is student.")
+    public void updateUserRightsWhenUserIsNotStudent() throws UsernameNotExistsException {
+        User user = new User();
+        user.setUsername("test");
+        user.setLanguagePreference("romanian");
+
+        Role roleUser = new Role();
+        roleUser.setName(ERole.ROLE_TEACHER);
+
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(roleUser);
+        user.setRoles(roleSet);
+
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+        Mockito.doNothing().when(this.studentRepository).deleteByUsername("test");
+
+        User result = this.userService.updateUserRights(ERole.ROLE_STUDENT, "test");
+
+        Mockito.verify(this.userRepository, Mockito.times(1)).save(user);
+
+        assertEquals("test", result.getUsername());
+        assertEquals(1, result.getRoles().size());
+        assertEquals(roleSet, result.getRoles());
+        assertEquals(ERole.ROLE_STUDENT, result.getRoles().iterator().next().getName());
+    }
+
+    @Test
+    @DisplayName("Get preferred language successfully.")
+    public void getPreferredLanguageTest() {
+        User user = new User();
+        user.setUsername("test");
+        user.setLanguagePreference("Romanian");
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ROMANIAN", result.name());
+        assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Get preferred default language successfully.")
+    public void getPreferredDefaultLanguageTest() {
+        User user = new User();
+        user.setUsername("test");
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ENGLISH", result.name());
+        assertNotNull(result);
+    }
+    @Test
+    @DisplayName("Get preferred default language when user not found successfully.")
+    public void getPreferredDefaultLanguageWhenUserNotFoundTest() {
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.empty());
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ENGLISH", result.name());
+        assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Get preferred language principal successfully.")
+    public void getPreferredLanguagePrincipalTest() {
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        User user = new User();
+        user.setUsername("test");
+        user.setLanguagePreference("Romanian");
+
+        Mockito.when(this.userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user));
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ROMANIAN", result.name());
+        assertNotNull(result);
+        assertEquals("test", principal.getName());
+    }
+
+    @Test
+    @DisplayName("Get preferred default language principal successfully.")
+    public void getPreferredDefaultLanguagePrincipalTest() {
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        User user = new User();
+        user.setUsername("test");
+
+        Mockito.when(this.userRepository.findByUsername(principal.getName())).thenReturn(Optional.of(user));
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ENGLISH", result.name());
+        assertNotNull(result);
+        assertEquals("test", principal.getName());
+    }
+
+    @Test
+    @DisplayName("Get preferred default language principal with user not found successfully.")
+    public void getPreferredDefaultLanguagePrincipalWithUserNotFoundTest() {
+        Principal principal = new Principal() {
+            @Override
+            public String getName() {
+                return "test";
+            }
+        };
+
+        Mockito.when(this.userRepository.findByUsername(principal.getName())).thenReturn(Optional.empty());
+
+        ELanguage result = this.userService.getPreferredLanguage("test");
+
+        assertEquals("ENGLISH", result.name());
+        assertNotNull(result);
+        assertEquals("test", principal.getName());
     }
 }

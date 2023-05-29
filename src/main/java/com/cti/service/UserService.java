@@ -54,10 +54,14 @@ public class UserService {
         }
 
         user = optionalUser.get();
-        if (user.getLanguagePreference() == null)
+        if (user.getLanguagePreference() == null) {
             return result;
-        if (user.getLanguagePreference().equals("Romanian"))
+        }
+
+        if (user.getLanguagePreference().equals("Romanian")) {
             return ELanguage.ROMANIAN;
+        }
+
         return ELanguage.ENGLISH;
     }
 
@@ -76,8 +80,10 @@ public class UserService {
             if (roles.get(0).getName().equals(ERole.ROLE_STUDENT) && !role.equals(ERole.ROLE_STUDENT)) {
                 studentRepository.deleteByUsername(user.getUsername());
             }
-            if (!roles.get(0).getName().equals(ERole.ROLE_STUDENT) && role.equals(ERole.ROLE_STUDENT))
+
+            if (!roles.get(0).getName().equals(ERole.ROLE_STUDENT) && role.equals(ERole.ROLE_STUDENT)) {
                 studentRepository.save(new Student(user.getUsername(), user.getEmail()));
+            }
 
         }
         user.getRoles().clear();
