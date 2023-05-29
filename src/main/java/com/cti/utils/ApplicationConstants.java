@@ -32,4 +32,7 @@ public interface ApplicationConstants {
     String STUDENT_EXISTS = "StudentExists";
     String TITLE_ADDED = "TitleAdded";
     String TITLE_EXISTS = "TitleExists";
+    String UPDATED_LANGUAGE = "UpdatedLanguage";
+    String USER_NOT_FOUND = "UserNotFound";
+    String USER_NO_LANGUAGE = "UserNoLanguage";
 }
