@@ -89,6 +89,21 @@ public class UserServiceTests {
         Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
 
         assertThrows(UserNoLanguageException.class, () -> this.userService.getLanguagePreference("test"));
+    }
 
+    @Test
+    @DisplayName("Update language preference successfully.")
+    public void updateLanguagePreferenceTest() throws UserNotFoundException {
+        User user = new User();
+        user.setUsername("test");
+        user.setLanguagePreference("romanian");
+
+        Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
+
+        this.userService.updateLanguagePreference("test", "english");
+
+        Mockito.verify(this.userRepository, Mockito.times(1)).save(user);
+
+        assertEquals("english", user.getLanguagePreference());
     }
 }
