@@ -1,12 +1,13 @@
 package com.cti.controllers;
 
-import com.cti.exception.CourseNotFoundException;
-import com.cti.exception.StudentAlreadyEnrolledException;
-import com.cti.exception.StudentNotExistsException;
+import com.cti.exception.*;
 import com.cti.models.Course;
 import com.cti.models.ELanguage;
+import com.cti.payload.request.CourseAddRequest;
 import com.cti.service.CourseService;
 import com.cti.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -15,20 +16,20 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class CourseControllerTest {
@@ -52,7 +53,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getAllCoursesSuccessfully() throws Exception {
+    public void getAllCoursesSuccessfullyTest() throws Exception {
         Mockito.when(this.courseService.getAllCourses()).thenReturn(List.of(new Course()));
 
         this.mockMvc.perform(get(URL)
@@ -62,7 +63,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getUserCoursesSuccessfully() throws Exception {
+    public void getUserCoursesSuccessfullyTest() throws Exception {
         String username = "username";
 
         Mockito.when(this.courseService.getUserCourses(username)).thenReturn(List.of(new Course()));
@@ -75,7 +76,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getEnrolledStudentsSuccessfully() throws Exception {
+    public void getEnrolledStudentsSuccessfullyTest() throws Exception {
         String uniqueId = "uniqueId";
 
         Mockito.when(this.courseService.getEnrolledStudents(uniqueId)).thenReturn(List.of("Student1", "Student2"));
@@ -88,7 +89,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void addUserCoursesSuccessfully() throws Exception {
+    public void addUserCoursesSuccessfullyTest() throws Exception {
         String uniqueId = "uniqueId";
         String username = "username";
 
@@ -103,7 +104,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void addCourseWithCourseNotFoundException() throws Exception {
+    public void addCourseWithCourseNotFoundExceptionTest() throws Exception {
         String uniqueId = "uniqueId";
         String username = "username";
 
@@ -130,7 +131,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void addCourseWithStudentNotExistsException() throws Exception {
+    public void addCourseWithStudentNotExistsExceptionTest() throws Exception {
         String uniqueId = "uniqueId";
         String username = "username";
 
@@ -159,7 +160,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void addCourseWithStudentAlreadyEnrolledException() throws Exception {
+    public void addCourseWithStudentAlreadyEnrolledExceptionTest() throws Exception {
         String uniqueId = "uniqueId";
         String username = "username";
 
@@ -186,7 +187,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void removeUserCourses() throws Exception {
+    public void removeUserCoursesTest() throws Exception {
         String uniqueId = "uniqueId";
         String username = "username";
 
@@ -210,5 +211,404 @@ public class CourseControllerTest {
         String content = result.getResponse().getContentAsString();
 
         assertTrue(content.contains("Successfully removed student from course"));
+    }
+
+    @Test
+    public void removeUserCoursesWhenCourseNotFoundTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(CourseNotFoundException.class).when(this.courseService).removeUserCourses(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/user")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Course not found"));
+    }
+
+    @Test
+    public void removeUserCoursesWhenStudentNotExistsTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(StudentNotExistsException.class).when(this.courseService).removeUserCourses(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/user")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Student with the following username does not exist: username"));
+    }
+
+    @Test
+    public void removeUserCoursesWhenStudentAlreadyEnrolledTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(StudentAlreadyEnrolledException.class).when(this.courseService).removeUserCourses(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/user")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Student is already enrolled in this course"));
+    }
+
+    @Test
+    public void getResponsibleSuccessfullyTest() throws Exception {
+        String uniqueId = "uniqueId";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.courseService.getResponsible(uniqueId)).thenReturn(List.of("responsible"));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("[\"responsible\"]"));
+    }
+
+    @Test
+    public void addResponsibleSuccessfullyTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Course course = new Course();
+        course.setCompleteName("course");
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.when(this.courseService.addResponsible(uniqueId, username)).thenReturn(course);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Successfully added teacher as responsible for course"));
+    }
+
+    @Test
+    public void addResponsibleWithCourseNotFoundTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(CourseNotFoundException.class).when(this.courseService).addResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Course not found"));
+    }
+
+    @Test
+    public void addResponsibleWithUsernameIStudent() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(UsernameIsStudentException.class).when(this.courseService).addResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Username is a student username"));
+    }
+
+    @Test
+    public void addResponsibleWhenUsernameNotExists() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(UsernameNotExistsException.class).when(this.courseService).addResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Username does not exist username"));
+    }
+
+    @Test
+    public void addResponsibleWhenUsernameAlreadyResponsible() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(UsernameAlreadyResponsibleException.class).when(this.courseService).addResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Username is already responsible for this course username"));
+    }
+
+    @Test
+    public void removeResponsibleSuccessfullyTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Course course = new Course();
+        course.setCompleteName("course");
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.when(this.courseService.removeResponsible(uniqueId, username)).thenReturn(course);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Successfully removed teacher as responsible from course"));
+    }
+
+    @Test
+    public void removeResponsibleWhenCourseNotFoundTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(CourseNotFoundException.class).when(this.courseService).removeResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Course not found"));
+    }
+
+    @Test
+    public void removeResponsibleWhenCourseNoResponsibleExceptionTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.doThrow(CourseNoResponsibleException.class).when(this.courseService).removeResponsible(uniqueId, username);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/course-controller/responsible")
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Course does not have teacher as responsible username"));
+    }
+
+    @Test
+    public void addCourseSuccessfullyTest() throws Exception {
+        String uniqueId = "uniqueId";
+        String username = "username";
+
+        Principal principal = Mockito.mock(Principal.class);
+
+        Course course = new Course();
+        course.setCompleteName("course");
+        course.setAbbreviation("abbreviation");
+        course.setDescription("description");
+
+        CourseAddRequest courseAddRequest = new CourseAddRequest();
+        courseAddRequest.setCompleteName("course");
+        courseAddRequest.setAbbreviation("abbreviation");
+        courseAddRequest.setDescription("description");
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.when(this.courseService.addCourse(courseAddRequest)).thenReturn(List.of(course));
+
+        //TODO:fix this test
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(URL)
+                .param("uniqueId", uniqueId)
+                .param("username", username)
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(courseAddRequest).getBytes());
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("Successfully added teacher as responsible for course"));
+    }
+
+    @Test
+    public void deleteCourseSuccessfullyTest() throws Exception {
+        String uniqueId = "uniqueId";
+
+        Course course = new Course();
+        course.setCompleteName("course");
+        course.setAbbreviation("abbreviation");
+        course.setDescription("description");
+
+        Mockito.when(this.courseService.deleteCourse(uniqueId)).thenReturn(List.of(course));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL)
+                .param("uniqueId", uniqueId)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("[{\"uniqueId\":null,\"completeName\":\"course\",\"abbreviation\":\"abbreviation\",\"description\":\"description\",\"responsible\":null,\"assignedUsers\":0}]"));
+    }
+
+    private static String asJsonString(final Object obj) {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
