@@ -4,6 +4,7 @@ public interface ApplicationConstants {
     String COURSE_NOT_FOUND = "CourseNotFound";
     String STUDENT_NOT_EXISTS = "StudentNotExists";
     String STUDENT_ALREADY_ENROLLED = "StudentAlreadyEnrolled";
+    String STUDENT_NOT_ENROLLED = "StudentNotEnrolled";
     String STUDENT_ENROLLED = "StudentEnrolled";
     String STUDENT_REMOVED_FROM_COURSE = "StudentRemovedFromCourse";
     String TEACHER_ADDED_RESPONSIBLE = "TeacherAddedResponsible";

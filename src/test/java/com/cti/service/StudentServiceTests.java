@@ -7,10 +7,7 @@ import com.cti.payload.request.StudentUpdateRequest;
 import com.cti.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,7 +21,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertThrows;
-import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -137,13 +134,36 @@ public class StudentServiceTests {
         request.setPassword("pass");
         request.setEmailAddress("email");
 
+        Student student = new Student();
+        student.setUsername("test");
+        student.setEmailAddress("email");
+
         when(userRepository.findByUsername(request.getUsername())).thenReturn(Optional.empty());
+
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        when(userRepository.save(userCaptor.capture())).thenReturn(null);
+
+        ArgumentCaptor<Student> studentCaptor = ArgumentCaptor.forClass(Student.class);
+        when(studentRepository.save(studentCaptor.capture())).thenReturn(null);
+
+        List<Student> students = List.of(student);
+        when(studentRepository.findAll()).thenReturn(students);
 
         List<Student> result = studentService.addStudent(request);
 
         verify(userRepository, times(1)).save(any(User.class));
         verify(studentRepository, times(1)).save(any(Student.class));
         verify(studentRepository, times(1)).findAll();
+
+        assertFalse(result.isEmpty());
+
+        User savedUser = userCaptor.getValue();
+        assertEquals(request.getUsername(), savedUser.getUsername());
+        assertEquals(request.getEmailAddress(), savedUser.getEmail());
+
+        Student savedStudent = studentCaptor.getValue();
+        assertEquals(request.getUsername(), savedStudent.getUsername());
+        assertEquals(request.getEmailAddress(), savedStudent.getEmailAddress());
     }
 
     @Test
@@ -254,6 +274,16 @@ public class StudentServiceTests {
     @Test
     @DisplayName("Delete a student successfully.")
     public void deleteStudentTest() {
+        Mockito.doNothing().when(userRepository).deleteByUsername(USERNAME);
+        Mockito.doNothing().when(studentRepository).deleteByUsername(USERNAME);
+
+        Student student = new Student();
+        student.setUsername(USERNAME);
+
+
+        List<Student> students = List.of(student);
+        when(studentRepository.findAll()).thenReturn(students);
+
         List<Student> result = this.studentService.deleteStudent(USERNAME);
 
         verify(userRepository, times(1)).deleteByUsername(USERNAME);

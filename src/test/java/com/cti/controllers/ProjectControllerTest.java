@@ -495,7 +495,6 @@ public class ProjectControllerTest {
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
 
-
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -517,7 +516,6 @@ public class ProjectControllerTest {
                 .param("uniqueId", ID)
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
-
 
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())
@@ -545,7 +543,6 @@ public class ProjectControllerTest {
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
 
-
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -572,7 +569,6 @@ public class ProjectControllerTest {
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
 
-
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -596,7 +592,6 @@ public class ProjectControllerTest {
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
 
-
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -619,7 +614,6 @@ public class ProjectControllerTest {
                 .param("uniqueId", ID)
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON);
-
 
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())

@@ -33,8 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.testng.AssertJUnit.assertTrue;
 
-@RunWith(SpringRunner.class)
-@ExtendWith(SpringExtension.class)
 public class CourseControllerTest {
     private MockMvc mockMvc;
 
@@ -548,22 +546,21 @@ public class CourseControllerTest {
         Principal principal = Mockito.mock(Principal.class);
 
         Course course = new Course();
-        course.setCompleteName("course");
+        course.setCompleteName("test");
         course.setAbbreviation("test");
-        course.setDescription("description");
+        course.setDescription("test");
 
         CourseAddRequest courseAddRequest = new CourseAddRequest();
-        courseAddRequest.setCompleteName("course");
+        courseAddRequest.setCompleteName("test");
         courseAddRequest.setAbbreviation("test");
-        courseAddRequest.setDescription("description");
+        courseAddRequest.setDescription("test");
 
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.when(this.courseService.addCourse(courseAddRequest)).thenReturn(List.of(course));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(URL)
-                .principal(principal)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(courseAddRequest).getBytes());
+                .content(asJsonString(courseAddRequest))
+                .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder)
                 .andDo(print())

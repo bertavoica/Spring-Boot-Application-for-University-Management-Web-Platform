@@ -74,13 +74,12 @@ public class StudentController {
         try {
             this.studentService.removeStudentFromCourse(username, courseId);
             return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.STUDENT_REMOVED_FROM_COURSE).get(userService.getPreferredLanguage(principal)));
-
         } catch (UsernameNotExistsException e) {
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USERNAME_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
         } catch (StudentsAlreadyRegisteredException e) {
             return ResponseEntity.ok(studentRepository.findAll());
         } catch (StudentNotEnrolledException e) {
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENT_ENROLLED).get(userService.getPreferredLanguage(principal)));
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.STUDENT_NOT_ENROLLED).get(userService.getPreferredLanguage(principal)));
         }
     }
 
