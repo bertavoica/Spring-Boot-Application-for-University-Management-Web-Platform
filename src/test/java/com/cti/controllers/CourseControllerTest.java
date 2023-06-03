@@ -545,28 +545,22 @@ public class CourseControllerTest {
 
     @Test
     public void addCourseSuccessfullyTest() throws Exception {
-        String uniqueId = "uniqueId";
-        String username = "username";
-
         Principal principal = Mockito.mock(Principal.class);
 
         Course course = new Course();
         course.setCompleteName("course");
-        course.setAbbreviation("abbreviation");
+        course.setAbbreviation("test");
         course.setDescription("description");
 
         CourseAddRequest courseAddRequest = new CourseAddRequest();
         courseAddRequest.setCompleteName("course");
-        courseAddRequest.setAbbreviation("abbreviation");
+        courseAddRequest.setAbbreviation("test");
         courseAddRequest.setDescription("description");
 
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.when(this.courseService.addCourse(courseAddRequest)).thenReturn(List.of(course));
 
-        //TODO:fix this test
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(URL)
-                .param("uniqueId", uniqueId)
-                .param("username", username)
                 .principal(principal)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(courseAddRequest).getBytes());

@@ -67,7 +67,7 @@ public class ProjectController {
         }
     }
 
-    @PutMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<?> uploadProject(@Valid @ModelAttribute AssignmentUploadRequest assignmentUploadRequest,
                                            Principal principal) throws IOException {
