@@ -5,6 +5,7 @@ import com.cti.models.Course;
 import com.cti.models.ELanguage;
 import com.cti.models.Student;
 import com.cti.payload.request.StudentAddRequest;
+import com.cti.payload.request.StudentUpdateRequest;
 import com.cti.repository.StudentRepository;
 import com.cti.service.StudentService;
 import com.cti.service.UserService;
@@ -23,9 +24,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.management.relation.RoleNotFoundException;
 import java.security.Principal;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.testng.AssertJUnit.assertTrue;
@@ -115,7 +119,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doNothing().when(this.studentService).enrollStudent(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL + "/course")
+        RequestBuilder requestBuilder = put(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -146,7 +150,7 @@ public class StudentControllerTest {
         Mockito.doThrow(StudentNotExistsException.class).when(this.studentService).enrollStudent(username, courseId);
         Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(student));
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL + "/course")
+        RequestBuilder requestBuilder = put(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -173,7 +177,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doThrow(UsernameNotExistsException.class).when(this.studentService).enrollStudent(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL + "/course")
+        RequestBuilder requestBuilder = put(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -200,7 +204,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doThrow(CourseNotFoundException.class).when(this.studentService).enrollStudent(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL + "/course")
+        RequestBuilder requestBuilder = put(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -227,7 +231,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doThrow(StudentAlreadyEnrolledException.class).when(this.studentService).enrollStudent(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(URL + "/course")
+        RequestBuilder requestBuilder = put(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -254,7 +258,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doNothing().when(this.studentService).removeStudentFromCourse(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/course")
+        RequestBuilder requestBuilder = delete(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -281,7 +285,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doThrow(UsernameNotExistsException.class).when(this.studentService).removeStudentFromCourse(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/course")
+        RequestBuilder requestBuilder = delete(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -312,7 +316,7 @@ public class StudentControllerTest {
         Mockito.doThrow(StudentsAlreadyRegisteredException.class).when(this.studentService).removeStudentFromCourse(username, courseId);
         Mockito.when(this.studentRepository.findAll()).thenReturn(List.of(student));
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/course")
+        RequestBuilder requestBuilder = delete(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -338,7 +342,7 @@ public class StudentControllerTest {
         Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
         Mockito.doThrow(StudentNotEnrolledException.class).when(this.studentService).removeStudentFromCourse(username, courseId);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/course")
+        RequestBuilder requestBuilder = delete(URL + "/course")
                 .param("username", username)
                 .param("courseId", courseId)
                 .principal(principal)
@@ -439,10 +443,70 @@ public class StudentControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-//        content.contains("[{\"username\":\"username\",\"emailAddress\":null,\"educationCycle\":null,\"specialization\":null,\"projects\":[],\"coursesIds\":[],\"group\":null,\"superior\":null}]"));
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("[{\"username\":\"username\",\"emailAddress\":null,\"educationCycle\":null,\"specialization\":null,\"projects\":[],\"coursesIds\":[],\"group\":null,\"superior\":null}]"));
     }
 
+    @Test
+    public void updateStudentTest() throws Exception {
+        Principal principal = Mockito.mock(Principal.class);
 
+        StudentUpdateRequest studentUpdateRequest = new StudentUpdateRequest();
+        studentUpdateRequest.setGroup("test");
+        studentUpdateRequest.setRole("test");
+        studentUpdateRequest.setCycle("test");
+        studentUpdateRequest.setSpecialization("test");
+        studentUpdateRequest.setUsername("test");
+
+        Student student = new Student();
+        student.setUsername("test");
+        student.setGroup("test");
+        student.setSpecialization("test");
+
+        Mockito.when(this.userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
+        Mockito.when(this.studentService.updateStudent(studentUpdateRequest)).thenReturn(List.of(student));
+
+        RequestBuilder requestBuilder = put(URL)
+                .content(asJsonString(studentUpdateRequest))
+                .principal(principal)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("[{\"username\":\"username\",\"emailAddress\":null,\"educationCycle\":null,\"specialization\":null,\"projects\":[],\"coursesIds\":[],\"group\":null,\"superior\":null}]"));
+    }
+
+    @Test
+    public void deleteStudentTest() throws Exception {
+        String username = "test";
+
+        Student student = new Student();
+        student.setUsername("test");
+        student.setGroup("test");
+        student.setSpecialization("test");
+
+        Mockito.when(this.studentService.deleteStudent(username)).thenReturn(List.of(student));
+
+        RequestBuilder requestBuilder = delete(URL)
+                .param("username", username)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertTrue(content.contains("[{\"username\":\"test\",\"emailAddress\":null,\"educationCycle\":null,\"specialization\":\"test\",\"projects\":[],\"coursesIds\":[],\"group\":\"test\",\"superior\":null}]"));
+    }
 
     private static String asJsonString(final Object obj) {
         final ObjectMapper mapper = new ObjectMapper();
