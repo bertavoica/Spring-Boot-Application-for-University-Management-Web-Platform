@@ -4,10 +4,9 @@ import com.cti.exception.StudentExistException;
 import com.cti.exception.TeacherNotExistsException;
 import com.cti.exception.TitleNotExistsException;
 import com.cti.exception.UserExistException;
-import com.cti.models.*;
+import com.cti.models.Teacher;
 import com.cti.payload.request.TeacherAddRequest;
 import com.cti.payload.request.TeacherUpdateRequest;
-import com.cti.repository.*;
 import com.cti.service.TeacherService;
 import com.cti.service.UserService;
 import com.cti.utils.ApplicationConstants;
@@ -15,36 +14,17 @@ import com.cti.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.*;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/teacher-controller")
 public class TeacherController {
-
-    @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
-    private TitleRepository titleRepository;
 
     @Autowired
     private UserService userService;
@@ -66,7 +46,8 @@ public class TeacherController {
     public ResponseEntity<?> addTeacher(@Valid @RequestBody TeacherAddRequest teacherAddRequest,
                                         Principal principal) {
         try {
-            return ResponseEntity.ok(this.teacherService.addTeacher(teacherAddRequest));
+            List<Teacher> teachers = this.teacherService.addTeacher(teacherAddRequest);
+            return ResponseEntity.ok(teachers);
         } catch (UserExistException e) {
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USER_EXISTS).get(userService.getPreferredLanguage(principal)));
         } catch (TitleNotExistsException e) {

@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.management.relation.RoleNotFoundException;
 import java.security.Principal;
 import java.util.List;
 
