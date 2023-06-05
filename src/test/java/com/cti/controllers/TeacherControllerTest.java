@@ -1,16 +1,10 @@
 package com.cti.controllers;
 
-import com.cti.exception.TitleNotExistsException;
-import com.cti.exception.UserExistException;
-import com.cti.models.Course;
-import com.cti.models.ELanguage;
 import com.cti.models.Teacher;
 import com.cti.payload.request.TeacherAddRequest;
 import com.cti.payload.request.TeacherUpdateRequest;
 import com.cti.service.TeacherService;
 import com.cti.service.UserService;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import org.mockito.InjectMocks;
@@ -27,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

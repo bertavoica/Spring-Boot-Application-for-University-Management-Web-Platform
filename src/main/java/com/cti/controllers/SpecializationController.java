@@ -1,5 +1,6 @@
 package com.cti.controllers;
 
+import com.cti.exception.*;
 import com.cti.models.Specialization;
 import com.cti.models.Teacher;
 import com.cti.payload.request.SpecializationAddRequest;
@@ -10,6 +11,7 @@ import com.cti.repository.SpecializationRepository;
 import com.cti.repository.TeacherRepository;
 import com.cti.service.SpecializationService;
 import com.cti.service.UserService;
+import com.cti.utils.ApplicationConstants;
 import com.cti.utils.Utils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,42 +54,26 @@ public class SpecializationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addSpecialization(@Valid @RequestBody SpecializationAddRequest specializationAddRequest,
                                                Principal principal) {
-        Specialization specialization;
-
-        if (specializationRepository.findByName(specializationAddRequest.getName()).isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SpecializationExists").get(userService.getPreferredLanguage(principal)) + " " + specializationAddRequest.getName());
-
-        specialization = new Specialization(specializationAddRequest);
-        specializationRepository.save(specialization);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("SpecializationAdded").get(userService.getPreferredLanguage(principal)) + " " + specializationAddRequest.getName());
+        try {
+            this.specializationService.addSpecialization(specializationAddRequest);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_ADDED).get(userService.getPreferredLanguage(principal)) + " " + specializationAddRequest.getName());
+        } catch (SpecializationExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + specializationAddRequest.getName());
+        }
     }
 
     @PutMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateSpecialization(@Valid @RequestBody SpecializationUpdateRequest specializationUpdateRequest,
                                                   Principal principal) {
-        Specialization specialization;
-        Optional<Specialization> optionalSpecialization;
-        List<Teacher> teachers;
-
-        optionalSpecialization = specializationRepository.findByUniqueId(specializationUpdateRequest.getUniqueId());
-        if (!optionalSpecialization.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SpecializationNotExists").get(userService.getPreferredLanguage(principal)));
-
-        if (specializationRepository.findByName(specializationUpdateRequest.getName()).isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SpecializationExists").get(userService.getPreferredLanguage(principal)) + " " + specializationUpdateRequest.getName());
-
-        specialization = optionalSpecialization.get();
-        teachers = teacherRepository.findBySpecialization(specialization.getName());
-        for (Teacher teacher : teachers) {
-            teacher.setSpecialization(specializationUpdateRequest.getName());
-            teacherRepository.save(teacher);
+        try {
+            this.specializationService.updateSpecialization(specializationUpdateRequest);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_UPDATED).get(userService.getPreferredLanguage(principal)));
+        } catch (SpecializationExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + specializationUpdateRequest.getName());
+        } catch (SpecializationNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
         }
-        specialization.setName(specializationUpdateRequest.getName());
-        specializationRepository.save(specialization);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("SpecializationUpdated").get(userService.getPreferredLanguage(principal)));
     }
 
     @DeleteMapping()
@@ -95,56 +81,27 @@ public class SpecializationController {
     public ResponseEntity<?> deleteSpecialization(@RequestParam(name = "uniqueId", defaultValue = "") java.lang.String uniqueId,
                                                   Principal principal) {
 
-        specializationRepository.deleteByUniqueId(uniqueId);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("SpecializationDeleted").get(userService.getPreferredLanguage(principal)));
+        this.specializationService.deleteSpecialization(uniqueId);
+        return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_DELETED).get(userService.getPreferredLanguage(principal)));
     }
 
     @PostMapping(value="/member")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addSpecializationMember(@Valid @RequestBody SpecializationMemberAddRequest specializationMemberAddRequest,
                                                      Principal principal) {
-        Specialization teacherSpecialization, superiorSpecialization, inputSpecialization;
-        Optional<Specialization> optionalSpecialization;
-        Teacher teacher;
-        Optional<Teacher> optionalTeacher;
-
-        teacherSpecialization = specializationService.getTeacherSpecialization(specializationMemberAddRequest.getName());
-
-        if (teacherSpecialization != null)
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherBelongsSpecialization").get(userService.getPreferredLanguage(principal)) + " " + teacherSpecialization.getName());
-
-        optionalSpecialization = specializationRepository.findByName(specializationMemberAddRequest.getSpecializationName());
-        if (!optionalSpecialization.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SpecializationNotExists").get(userService.getPreferredLanguage(principal))  + " " + specializationMemberAddRequest.getSpecializationName());
-        inputSpecialization = optionalSpecialization.get();
-
-        if (specializationMemberAddRequest.getSuperior() != null && !specializationMemberAddRequest.getSuperior().equals("")) {
-            superiorSpecialization = specializationService.getTeacherSpecialization(specializationMemberAddRequest.getSuperior());
-            if (superiorSpecialization == null)
-                return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SuperiorNotBelongsSpecialization").get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getSuperior());
-            if (!superiorSpecialization.getName().equals(specializationMemberAddRequest.getSpecializationName()))
-                return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SuperiorDifferentSpecialization").get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getSuperior());
+        try {
+            this.specializationService.addSpecializationMember(specializationMemberAddRequest);
+        } catch (SpecializationNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_NOT_EXISTS).get(userService.getPreferredLanguage(principal))  + " " + specializationMemberAddRequest.getSpecializationName());
+        } catch (TeacherBelongsToSpecializationException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_BELONGS_TO_SPECIALIZATION).get(userService.getPreferredLanguage(principal)));
+        } catch (SuperiorNotBelongsSpecializationException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SUPERIOR_NOT_BELONGS_TO_SPECIALIZATION).get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getSuperior());
+        } catch (TeacherNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_NOT_EXISTS).get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getName());
+        } catch (SuperiorDifferentSpecializationException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SUPERIOR_DIFFERENT_SPECIALIZATION).get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getSuperior());
         }
-
-        optionalTeacher = teacherRepository.findByUsername(specializationMemberAddRequest.getName());
-        if (!optionalTeacher.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherNotExists").get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getName());
-
-        teacher = optionalTeacher.get();
-        if (inputSpecialization.getTeachers().contains(teacher.getUsername()))
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherBelongsSpecialization").get(userService.getPreferredLanguage(principal)));
-
-        if (specializationMemberAddRequest.getSuperior() != null && !specializationMemberAddRequest.getSuperior().equals(""))
-            teacher.setSuperior(specializationMemberAddRequest.getSuperior());
-
-        teacher.setSpecialization(inputSpecialization.getName());
-        inputSpecialization.getTeachers().add(teacher.getUsername());
-
-        teacherRepository.save(teacher);
-        specializationRepository.save(inputSpecialization);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("TeacherAddedSpecialization").get(userService.getPreferredLanguage(principal)) + " " + specializationMemberAddRequest.getSpecializationName());
     }
 
     @DeleteMapping(value="/member")
@@ -152,48 +109,18 @@ public class SpecializationController {
     public ResponseEntity<?> deleteSpecializationMember(@RequestParam(name = "stringName", defaultValue = "") java.lang.String stringName,
                                                         @RequestParam(name = "username", defaultValue = "") java.lang.String username,
                                                         Principal principal) {
-
-        Specialization inputSpecialization;
-        Optional<Specialization> optionalSpecialization;
-        int totalChildNodes;
-        Optional<Teacher> optionalTeacher;
-        Teacher teacher;
-        List<Teacher> teacherList;
-
-        optionalSpecialization = specializationRepository.findByName(stringName);
-        if (!optionalSpecialization.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("SpecializationNotExists").get(userService.getPreferredLanguage(principal)));
-        inputSpecialization = optionalSpecialization.get();
-
-        // Check if teacher exists in the input specialization
-        if (!inputSpecialization.getTeachers().contains(username))
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherNotBelongsSpecialization").get(userService.getPreferredLanguage(principal)));
-
-        teacherList = specializationService.provideTeachers(inputSpecialization.getTeachers());
-        // Check if the deleted teacher is superior for any other teacher
-        totalChildNodes = 0;
-        for (Teacher teacherFromSpecialization : teacherList) {
-            if (teacherFromSpecialization.getSuperior() != null && teacherFromSpecialization.getSuperior().equals(username))
-                totalChildNodes++;
+        try {
+            this.specializationService.deleteSpecializationMember(stringName, username);
+            return ResponseEntity.ok(Utils.languageDictionary.get(ApplicationConstants.TEACHER_REMOVED_SPECIALIZATION).get(userService.getPreferredLanguage(principal)));
+        } catch (TeacherNotBelongsSpecializationException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_NOT_BELONGS_SPECIALIZATION).get(userService.getPreferredLanguage(principal)));
+        } catch (SpecializationNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.SPECIALIZATION_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
+        } catch (TeacherNotExistsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_NOT_EXISTS).get(userService.getPreferredLanguage(principal)));
+        } catch (TeacherHasSuperiorsException e) {
+            return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.TEACHER_HAS_SUPERIORS).get(userService.getPreferredLanguage(principal)) + " " + totalChildNodes);
         }
-
-        if (totalChildNodes > 0)
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherHasSuperiors").get(userService.getPreferredLanguage(principal)) + " " + totalChildNodes);
-
-        // Check if teacher is in its repository
-        optionalTeacher = teacherRepository.findByUsername(username);
-        if (!optionalTeacher.isPresent())
-            return ResponseEntity.badRequest().body(Utils.languageDictionary.get("TeacherNotExists").get(userService.getPreferredLanguage(principal)));
-        teacher = optionalTeacher.get();
-
-        inputSpecialization.getTeachers().remove(username);
-        teacher.setSpecialization(null);
-        teacher.setSuperior(null);
-
-        teacherRepository.save(teacher);
-        specializationRepository.save(inputSpecialization);
-
-        return ResponseEntity.ok(Utils.languageDictionary.get("TeacherRemovedSpecialization").get(userService.getPreferredLanguage(principal)));
     }
 
     @GetMapping(value="/member")

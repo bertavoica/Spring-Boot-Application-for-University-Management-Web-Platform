@@ -36,4 +36,15 @@ public interface ApplicationConstants {
     String UPDATED_LANGUAGE = "UpdatedLanguage";
     String USER_NOT_FOUND = "UserNotFound";
     String USER_NO_LANGUAGE = "UserNoLanguage";
+    String SPECIALIZATION_ADDED = "SpecializationAdded";
+    String SPECIALIZATION_EXISTS = "SpecializationExists";
+    String SPECIALIZATION_UPDATED = "SpecializationUpdated";
+    String SPECIALIZATION_NOT_EXISTS = "SpecializationNotExists";
+    String SPECIALIZATION_DELETED = "SpecializationDeleted";
+    String TEACHER_BELONGS_TO_SPECIALIZATION = "TeacherBelongsSpecialization";
+    String SUPERIOR_NOT_BELONGS_TO_SPECIALIZATION = "SuperiorNotBelongsSpecialization";
+    String SUPERIOR_DIFFERENT_SPECIALIZATION = "SuperiorDifferentSpecialization";
+    String TEACHER_REMOVED_SPECIALIZATION = "TeacherRemovedSpecialization";
+    String TEACHER_NOT_BELONGS_SPECIALIZATION = "TeacherNotBelongsSpecialization";
+    String TEACHER_HAS_SUPERIORS = "TeacherHasSuperiors";
 }

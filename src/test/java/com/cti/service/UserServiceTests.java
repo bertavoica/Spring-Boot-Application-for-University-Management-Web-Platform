@@ -133,7 +133,6 @@ public class UserServiceTests {
         roleSet.add(roleUser);
         user.setRoles(roleSet);
 
-
         Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
         Mockito.doNothing().when(this.studentRepository).deleteByUsername("test");
 
@@ -160,7 +159,6 @@ public class UserServiceTests {
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roleUser);
         user.setRoles(roleSet);
-
 
         Mockito.when(this.userRepository.findByUsername("test")).thenReturn(Optional.of(user));
         Mockito.doNothing().when(this.studentRepository).deleteByUsername("test");
