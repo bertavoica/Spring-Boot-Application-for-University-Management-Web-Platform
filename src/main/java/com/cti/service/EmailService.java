@@ -16,12 +16,12 @@ import java.util.Properties;
 
 @Service
 public class EmailService extends ColumnFixture {
-
-    private static String email = "gestionare.proiecte.web@gmail.com";
-    private static String password = "gestionare_platforma_web";
-
     @Autowired
     private UserService userService;
+
+    private static String email = "gestionare.proiecte.web@gmail.com";
+
+    private static String password = "gestionare_platforma_web";
 
 
     /* Private methods (session initialization) : */

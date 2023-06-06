@@ -5,13 +5,14 @@ import com.cti.models.Specialization;
 import com.cti.models.Teacher;
 import com.cti.payload.request.SpecializationAddRequest;
 import com.cti.payload.request.SpecializationMemberAddRequest;
+import com.cti.payload.request.SpecializationMemberModifyRequest;
 import com.cti.payload.request.SpecializationUpdateRequest;
 import com.cti.repository.SpecializationRepository;
 import com.cti.repository.TeacherRepository;
-import com.cti.utils.Utils;
 import fit.ColumnFixture;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,13 +22,14 @@ import java.util.Optional;
 @Service
 public class SpecializationService extends ColumnFixture {
 
-    @Autowired
-    private SpecializationRepository specializationRepository;
+    private final SpecializationRepository specializationRepository;
 
-    @Autowired
-    private TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
 
-    public SpecializationService() {}
+    public SpecializationService(SpecializationRepository specializationRepository, TeacherRepository teacherRepository) {
+        this.specializationRepository = specializationRepository;
+        this.teacherRepository = teacherRepository;
+    }
 
     public void addSpecialization(SpecializationAddRequest specializationAddRequest) throws SpecializationExistsException {
         Specialization specialization;
@@ -194,6 +196,107 @@ public class SpecializationService extends ColumnFixture {
         }
 
         return teacherList;
+    }
+
+    public String getSpecializationGraph(String stringName) throws SpecializationNotExistsException, JSONException {
+        Specialization inputSpecialization;
+        Optional<Specialization> optionalSpecialization;
+        List<Teacher> teacherList;
+
+        JSONObject nodeValue;
+        JSONArray result = new JSONArray();
+        JSONArray node;
+
+        optionalSpecialization = specializationRepository.findByName(stringName);
+        if (!optionalSpecialization.isPresent()) {
+            throw new SpecializationNotExistsException();
+        }
+        inputSpecialization = optionalSpecialization.get();
+
+        node = new JSONArray();
+        node.put(stringName);
+        node.put("");
+        node.put("");
+        result.put(node);
+
+        teacherList = provideTeachers(inputSpecialization.getTeachers());
+
+        for (Teacher teacher : teacherList) {
+            if (teacher.getSuperior() == null) {
+                node = new JSONArray();
+                nodeValue = new JSONObject();
+                nodeValue.put("v", teacher.getUsername());
+                nodeValue.put("f", teacher.getUsername() + "<div style=\"color:red; font-style:italic\">" + (teacher.getTitle() == null ? "?" : teacher.getTitle()) + "</div>");
+                node.put(nodeValue);
+                node.put(stringName);
+                node.put("");
+                result.put(node);
+
+            } else {
+                node = new JSONArray();
+                nodeValue = new JSONObject();
+                nodeValue.put("v", teacher.getUsername());
+                nodeValue.put("f", teacher.getUsername() + "<div style=\"color:red; font-style:italic\">" + (teacher.getTitle() == null ? "?" : teacher.getTitle()) + "</div>");
+                node.put(nodeValue);
+                node.put(teacher.getSuperior());
+                node.put("");
+                result.put(node);
+            }
+        }
+
+
+        return result.toString();
+    }
+
+    public void modifySpecializationMember(SpecializationMemberModifyRequest specializationMemberModifyRequest) throws TeacherNotBelongsSpecializationException, TeacherBelongsDifferentSpecializationException, SuperiorNotBelongsSpecializationException, SuperiorDifferentSpecializationException {
+        Specialization teacherSpecialization;
+        Specialization superiorSpecialization;
+        List<Teacher> teacherList;
+
+        teacherSpecialization = getTeacherSpecialization(specializationMemberModifyRequest.getName());
+
+        if (teacherSpecialization == null) {
+            throw new TeacherNotBelongsSpecializationException();
+        }
+
+        if (!teacherSpecialization.getName().equals(specializationMemberModifyRequest.getSpecializationName())) {
+            throw new TeacherBelongsDifferentSpecializationException();
+        }
+
+        teacherList = provideTeachers(teacherSpecialization.getTeachers());
+
+        if (specializationMemberModifyRequest.getSuperiorName() == null || specializationMemberModifyRequest.getSuperiorName().equals("")) {
+            for (Teacher teacher : teacherList) {
+                if (teacher.getUsername().equals(specializationMemberModifyRequest.getName())) {
+                    teacher.setSuperior(null);
+                    teacherRepository.save(teacher);
+                    break;
+                }
+            }
+        } else {
+            superiorSpecialization = getTeacherSpecialization(specializationMemberModifyRequest.getSuperiorName());
+            if (superiorSpecialization == null) {
+                throw new SuperiorNotBelongsSpecializationException();
+            }
+
+            if (!superiorSpecialization.getName().equals(specializationMemberModifyRequest.getSpecializationName())) {
+                throw new SuperiorDifferentSpecializationException();
+            }
+
+            for (Teacher teacher : teacherList) {
+                if (teacher.getUsername().equals(specializationMemberModifyRequest.getName())) {
+                    teacher.setSuperior(specializationMemberModifyRequest.getSuperiorName());
+                    teacherRepository.save(teacher);
+                    break;
+                }
+            }
+        }
+
+        specializationRepository.save(teacherSpecialization);
+    }
+
+    public List<Specialization> getAllSpecializations() {
+        return specializationRepository.findAll();
     }
 
 }

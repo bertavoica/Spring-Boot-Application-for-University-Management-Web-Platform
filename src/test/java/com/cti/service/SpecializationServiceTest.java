@@ -1,7 +1,9 @@
 package com.cti.service;
 
+import com.cti.exception.SpecializationExistsException;
 import com.cti.models.Specialization;
 import com.cti.models.Teacher;
+import com.cti.payload.request.SpecializationAddRequest;
 import com.cti.repository.SpecializationRepository;
 import com.cti.repository.TeacherRepository;
 import org.junit.runner.RunWith;
@@ -16,6 +18,11 @@ import org.testng.annotations.Test;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.testng.AssertJUnit.*;
 
 @SpringBootTest
@@ -76,6 +83,37 @@ public class SpecializationServiceTest {
         Specialization result = specializationService.getTeacherSpecialization("");
 
         assertNull(result);
+    }
+
+    @Test
+    public void addSpecializationTest() {
+        String name = "test";
+
+        SpecializationAddRequest specializationAddRequest = new SpecializationAddRequest();
+        specializationAddRequest.setName(name);
+
+        Mockito.when(specializationRepository.findByName(name)).thenReturn(Optional.empty());
+
+        assertDoesNotThrow(() -> this.specializationService.addSpecialization(specializationAddRequest));
+
+        verify(specializationRepository, times(1)).save(any(Specialization.class));
+    }
+
+    @Test
+    public void addSpecializationWhenExists() {
+        String name = "test";
+
+        Specialization specialization = new Specialization();
+        specialization.setName("test");
+
+        SpecializationAddRequest specializationAddRequest = new SpecializationAddRequest();
+        specializationAddRequest.setName(name);
+
+        Mockito.when(specializationRepository.findByName(name)).thenReturn(Optional.of(specialization));
+
+        assertThrows(SpecializationExistsException.class, () -> this.specializationService.addSpecialization(specializationAddRequest));
+
+        verify(specializationRepository, times(0)).save(any(Specialization.class));
     }
 
 }

@@ -47,4 +47,7 @@ public interface ApplicationConstants {
     String TEACHER_REMOVED_SPECIALIZATION = "TeacherRemovedSpecialization";
     String TEACHER_NOT_BELONGS_SPECIALIZATION = "TeacherNotBelongsSpecialization";
     String TEACHER_HAS_SUPERIORS = "TeacherHasSuperiors";
+    String TEACHER_ADDED_SPECIALIZATION = "TeacherAddedSpecialization";
+    String SUPERIOR_MODIFIED = "SuperiorModified";
+    String TEACHER_BELONS_DIFFERENT_SPECIALIZATION ="TeacherBelongsDifferentSpecialization" ;
 }
