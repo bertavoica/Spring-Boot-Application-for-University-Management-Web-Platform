@@ -4,6 +4,7 @@ import com.cti.exception.SpecializationExistsException;
 import com.cti.models.Specialization;
 import com.cti.models.Teacher;
 import com.cti.payload.request.SpecializationAddRequest;
+import com.cti.payload.request.SpecializationUpdateRequest;
 import com.cti.repository.SpecializationRepository;
 import com.cti.repository.TeacherRepository;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -114,6 +116,33 @@ public class SpecializationServiceTest {
         assertThrows(SpecializationExistsException.class, () -> this.specializationService.addSpecialization(specializationAddRequest));
 
         verify(specializationRepository, times(0)).save(any(Specialization.class));
+    }
+
+    @Test
+    public void updateSpecializationTest() {
+        String name = "test";
+        String uniqueId = "test";
+
+        SpecializationUpdateRequest specializationUpdateRequest = new SpecializationUpdateRequest();
+        specializationUpdateRequest.setName(name);
+        specializationUpdateRequest.setUniqueId(uniqueId);
+
+        Specialization specialization = new Specialization();
+        specialization.setName("test1");
+        specialization.setUniqueId(uniqueId);
+
+        Mockito.when(this.specializationRepository.findByUniqueId(uniqueId)).thenReturn(Optional.of(specialization));
+        Mockito.when(this.specializationRepository.findByName(name)).thenReturn(Optional.empty());
+
+        Teacher teacher = new Teacher();
+        teacher.setSpecialization("specialization");
+
+        Mockito.when(this.teacherRepository.findBySpecialization("specialization")).thenReturn(List.of(teacher));
+
+        assertDoesNotThrow(() -> this.specializationService.updateSpecialization(specializationUpdateRequest));
+
+        verify(teacherRepository, times(1)).save(any(Teacher.class));
+        verify(specializationRepository, times(1)).save(any(Specialization.class));
     }
 
 }
