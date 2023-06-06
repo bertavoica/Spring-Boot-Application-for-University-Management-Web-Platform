@@ -141,8 +141,8 @@ public class SpecializationServiceTest {
 
         assertDoesNotThrow(() -> this.specializationService.updateSpecialization(specializationUpdateRequest));
 
-        verify(teacherRepository, times(1)).save(any(Teacher.class));
-        verify(specializationRepository, times(1)).save(any(Specialization.class));
+        verify(teacherRepository, times(1)).save(teacher);
+        verify(specializationRepository, times(1)).save(specialization);
     }
 
 }
