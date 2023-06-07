@@ -30,6 +30,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(this.userService.getAllUsers());
+    }
+
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateUserRights(@RequestParam(name = "username", defaultValue = "") String username,
@@ -65,12 +71,5 @@ public class UserController {
         } catch (UserNoLanguageException e) {
             return ResponseEntity.badRequest().body(Utils.languageDictionary.get(ApplicationConstants.USER_NO_LANGUAGE).get(userService.getPreferredLanguage(principal)));
         }
-    }
-
-
-    @GetMapping()
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllUsers() {
-        return ResponseEntity.ok(this.userService.getAllUsers());
     }
 }

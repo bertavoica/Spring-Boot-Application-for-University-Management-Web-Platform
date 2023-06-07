@@ -270,7 +270,8 @@ public class UserControllerTests {
 
         String content = result.getResponse().getContentAsString();
 
-        assertTrue(content.contains("[{\"id\":null,\"username\":\"test\",\"email\":null,\"password\":null,\"languagePreference\":\"English\",\"roles\":[]}]"));
+        assertTrue(content.contains("[{\"id\":null,\"username\":\"test\",\"email\":null,\"password\":null," +
+                "\"languagePreference\":\"English\",\"roles\":[]}]"));
     }
 
 
