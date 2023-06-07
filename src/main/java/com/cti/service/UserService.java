@@ -23,6 +23,28 @@ public class UserService {
     @Autowired
     private StudentRepository studentRepository;
 
+    public List<User> getAllUsers() {
+
+        return userRepository.findAll();
+    }
+
+    public String getLanguagePreference(String username) throws UserNotFoundException, UserNoLanguageException {
+        User user;
+        Optional<User> optionalUser;
+
+        optionalUser = userRepository.findByUsername(username);
+        if (!optionalUser.isPresent()) {
+            throw new UserNotFoundException();
+        }
+
+        user = optionalUser.get();
+        if (user.getLanguagePreference() == null) {
+            throw new UserNoLanguageException();
+        }
+
+        return user.getLanguagePreference();
+    }
+
     public ELanguage getPreferredLanguage(Principal principal) {
         ELanguage result = ELanguage.ENGLISH;
 
@@ -106,26 +128,5 @@ public class UserService {
         user = optionalUser.get();
         user.setLanguagePreference(language);
         userRepository.save(user);
-    }
-
-    public String getLanguagePreference(String username) throws UserNotFoundException, UserNoLanguageException {
-        User user;
-        Optional<User> optionalUser;
-
-        optionalUser = userRepository.findByUsername(username);
-        if (!optionalUser.isPresent()) {
-            throw new UserNotFoundException();
-        }
-
-        user = optionalUser.get();
-        if (user.getLanguagePreference() == null) {
-            throw new UserNoLanguageException();
-        }
-
-        return user.getLanguagePreference();
-    }
-
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
     }
 }
