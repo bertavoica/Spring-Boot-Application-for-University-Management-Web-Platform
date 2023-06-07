@@ -4,7 +4,6 @@ import com.cti.exception.UserNoLanguageException;
 import com.cti.exception.UserNotFoundException;
 import com.cti.exception.UsernameNotExistsException;
 import com.cti.models.*;
-import com.cti.service.TitleService;
 import com.cti.service.UserService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,14 +28,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.testng.AssertJUnit.assertTrue;
 
 public class UserControllerTests {
-    private MockMvc mockMvc;
-
     @InjectMocks
     private UserController userController;
 
-
     @Mock
     private UserService userService;
+
+    private MockMvc mockMvc;
 
     private static final String URL = "/user-controller";
 
