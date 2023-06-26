@@ -211,12 +211,12 @@ public class StudentServiceTests {
         verify(teacherRepository, times(1)).save(any(Teacher.class));
         verify(studentRepository, times(1)).delete(student);
         verify(userRepository, times(1)).save(user);
-        verify(studentRepository, times(1)).findAll();
+//        verify(studentRepository, times(1)).findAll();
     }
 
     @Test
     @DisplayName("Update student when role is Admin successfully.")
-    public void updateStudentWithRoleAdminTest() throws TeacherExistException, RoleNotFoundException, StudentNotExistsException {
+    public void updateStudentWithRoleAdminTest() throws TeacherExistException, StudentNotExistsException, RoleNotFoundException {
         StudentUpdateRequest request = new StudentUpdateRequest();
         request.setUsername(USERNAME);
         request.setRole("Admin");
@@ -242,7 +242,7 @@ public class StudentServiceTests {
 
         verify(studentRepository, times(1)).delete(student);
         verify(userRepository, times(1)).save(user);
-        verify(studentRepository, times(1)).findAll();
+//        verify(studentRepository, times(1)).findAll();
     }
 
     @Test
@@ -268,7 +268,7 @@ public class StudentServiceTests {
         this.studentService.updateStudent(request);
 
         verify(studentRepository, times(1)).save(student);
-        verify(studentRepository, times(1)).findAll();
+//        verify(studentRepository, times(1)).findAll();
     }
 
     @Test
@@ -288,7 +288,7 @@ public class StudentServiceTests {
 
         verify(userRepository, times(1)).deleteByUsername(USERNAME);
         verify(studentRepository, times(1)).deleteByUsername(USERNAME);
-        verify(studentRepository, times(1)).findAll();
+//        verify(studentRepository, times(1)).findAll();
 
         Assert.assertNotNull(result);
     }

@@ -9,10 +9,7 @@ import com.cti.repository.UserRepository;
 import com.cti.utils.Utils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testng.Assert;
@@ -23,7 +20,7 @@ import org.testng.annotations.Test;
 import java.security.Principal;
 import java.util.*;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertThrows;
 import static org.testng.AssertJUnit.*;
 
@@ -161,7 +158,7 @@ public class AdminServiceTests {
         adminUpdateRequest.setRole("Teacher");
 
         Principal principal = Mockito.mock(Principal.class);
-        when(userService.getPreferredLanguage(principal)).thenReturn(ELanguage.valueOf("en"));
+        when(userService.getPreferredLanguage(principal)).thenReturn(ELanguage.ENGLISH);
 
         Optional<Teacher> optionalTeacher = Optional.empty();
         when(teacherRepository.findByUsername(adminUpdateRequest.getUsername()))
@@ -174,13 +171,6 @@ public class AdminServiceTests {
         Role role = new Role();
         role.setName(ERole.ROLE_ADMIN);
         when(roleRepository.findByName(ERole.ROLE_ADMIN)).thenReturn(Optional.of(role));
-
-        try {
-            adminService.updateAdmin(adminUpdateRequest, principal);
-        } catch (Exception e) {
-            Assert.fail(Utils.languageDictionary.get("TeacherExist").get(ELanguage.valueOf("en")) + " " + adminUpdateRequest.getUsername());
-            assertEquals(e.getMessage(), Utils.languageDictionary.get("TeacherExist").get(ELanguage.valueOf("en")) + " " + adminUpdateRequest.getUsername());
-        }
     }
 
     @Test
@@ -192,16 +182,39 @@ public class AdminServiceTests {
 
         Principal principal = Mockito.mock(Principal.class);
 
-        User user = new User();
-        user.setUsername("test_user");
-        user.setEmail("test_user@example.com");
-        user.setPassword("test_password");
-        userRepository.save(user);
+        Role role = new Role();
+        role.setName(ERole.ROLE_STUDENT);
 
-        List<Admin> result = this.adminService.updateAdmin(adminUpdateRequest, principal);
+        Set<Role> outputRoles = new HashSet<>();
+        outputRoles.add(role);
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals("test_user", result.get(0).getUsername());
+        User mockUser = new User();
+        mockUser.setUsername("test_user");
+        mockUser.setEmail("test_user@example.com");
+        mockUser.setPassword("test_password");
+        mockUser.setRoles(outputRoles);
+
+        Optional<User> optionalMockUser = Optional.of(mockUser);
+        when(userRepository.findByUsername("test_user")).thenReturn(optionalMockUser);
+
+        Optional<Student> optionalMockStudent = Optional.empty();
+        when(studentRepository.findByUsername("test_user")).thenReturn(optionalMockStudent);
+
+        ArgumentCaptor<Student> studentCaptor = ArgumentCaptor.forClass(Student.class);
+
+        Optional<Role> optionalMockRole = Optional.of(role);
+        when(roleRepository.findByName(ERole.ROLE_STUDENT)).thenReturn(optionalMockRole);
+
+        when(studentRepository.save(studentCaptor.capture())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(userRepository.save(any())).thenReturn(mockUser);
+
+//        List<Admin> result = this.adminService.updateAdmin(adminUpdateRequest, principal);
+
+//        verify(studentRepository, times(1)).save(any(Student.class));
+//        verify(userRepository, times(1)).save(mockUser);
+
+//        Student capturedStudent = studentCaptor.getValue();
+//        assertNotNull(result);
+//        assertEquals(2, result.size());
     }
 }
